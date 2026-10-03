@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block meta_description %}{{ post.description }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.description }}{% endblock %}
+{% block og_image %}{% if post.image_cover %}{{ post.image_cover.url }}{% endif %}{% endblock %}
+
+{% block content %}
+{% if post.category %}
+    <div class="container max-w-6xl mx-auto px-6 text-center my-6">
+        <a href="{% url 'blog:category_detail' post.category.slug %}" 
+        class="inline-block bg-brand-blush/20 text-brand-terracotta text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full hover:bg-brand-terracotta hover:text-white transition mb-4">
+        {{ post.category.name }}
+        </a>
+    </div>
+{% endif %}
+
+
+<article class="pb-24">
+    <header class="container mx-auto px-6 max-w-6xl text-center mb-12">
+    <div class="flex flex-col md:flex-row w-full md:justify-between text-left items-left md:items-center border-b border-slate-100 pb-4">
+        <p class="text-xs text-slate-700 font-bold uppercase tracking-widest">{{ post.created_at|date:"d \d\e F, Y" }}</p>
+        
+        <div class="flex items-center gap-1">
+            {% if post.author.image %}
+                <img src="{{ post.author.image.url }}" 
+                     alt="Foto de {{ post.author.get_full_name }}" 
+                     class="w-10 h-10 rounded-full object-cover shadow-sm border border-slate-200">
+            {% else %}
+                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-sm">
+                    {{ post.author.first_name|slice:":1" }}{% if post.author.last_name %}{{ post.author.last_name|slice:":1" }}{% endif %}
+                </div>
+            {% endif %}
+            
+            <span class="text-slate-700 font-medium text-sm md:text-base">
+                Por <span class="hover:text-brand-terracotta transition-colors cursor-pointer">{{ post.author.get_full_name|default:post.author.username }}</span>
+            </span>
+        </div>
+    </div>
+
+    <h1 class="text-xl md:text-4xl font-bold leading-tight mb-4 text-left md:text-center">{{ post.title }}</h1>
+    <p class="text-xs md:text-md text-slate-500 max-w-2xl mx-auto mb-2 font-light italic text-left md:text-center" >Tempo de leitura {{ post.tempo_leitura }} minutos</p> 
+    <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-8 font-light italic text-left md:text-center">
+        {{ post.description }}
+    </p>
+
+    {% if post.image_cover %}
+    <img src="{{ post.image_cover.url }}" class="w-full rounded-2xl shadow-2xl mb-12 max-h-125 object-cover"
+        alt="{{ post.title }}">
+    {% endif %}
+</header>
+
+    <div class="container mx-auto px-6 max-w-4xl prose prose-neutral lg:prose-lg prose-headings:font-display prose-headings:text-brand-dark text-brand-dark/90 selection:bg-brand-blush">
+        {{ post.content|safe }}
+    </div>
+</article>
+
+{% if post.tags.all %}
+    <div class="container max-w-6xl mx-auto px-6 text-center">
+        <div class="flex flex-wrap gap-2 items-center mt-8">
+            <span class="text-xs font-bold text-brand-dark/50 uppercase tracking-wider">Tags:</span>
+            {% for tag in post.tags.all %}
+                <a href="{% url 'blog:tag_detail' tag.slug %}" 
+                class="text-xs bg-brand-light text-brand-dark/70 px-3 py-1 rounded-md border border-brand-blush/20 hover:border-brand-terracotta hover:text-brand-terracotta transition">
+                #{{ tag.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<hr class="border-brand-blush/20 my-12">
+
+<div class="container max-w-6xl mx-auto px-6 text-center mb-12">
+
+    {% if related_posts %}
+    <div>
+        <h3 class="font-display text-2xl font-bold text-brand-dark mb-6">Você também pode gostar</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for related in related_posts %}
+                {% include 'components/post_card.html' with post=related %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <hr class="border-brand-blush/20 my-12">
+
+    {% if category_posts %}
+    <div>
+        <h3 class="font-display text-2xl font-bold text-brand-dark mb-2">Mais em <em>{{ post.category.name }}</em></h3>
+        <p class="text-xs text-brand-dark/60 mb-6">Continue lendo sobre esse assunto</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for cat_post in category_posts %}
+                {% include 'components/post_card.html' with post=cat_post %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

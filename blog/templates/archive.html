@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Todos os Posts{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+    
+    <header class="text-center mb-12">
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-4">Universo GardenBrows</h1>
+        <p class="text-brand-dark/70 max-w-xl mx-auto">Explore todas as nossas dicas, inspirações, tendências e conversas sobre o nosso mundo.</p>
+    </header>
+
+    <div id="posts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+        {% include 'components/post_grid_items.html' %}
+    </div>
+
+    <div class="text-center">
+        {% if has_next %}
+            <button id="load-more-btn" 
+                    data-next-page="2" 
+                    class="bg-brand-terracotta text-white font-semibold px-8 py-3 rounded-full hover:bg-brand-dark transition cursor-pointer inline-flex items-center gap-2 shadow-sm">
+                Carregar Mais
+            </button>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const postsContainer = document.getElementById('posts-container');
+
+        // Se o botão não existir (ex: menos de 9 posts no total), para aqui.
+        if (!loadMoreBtn) return;
+
+        // APENAS este evento de clique controlará o carregamento agora
+        loadMoreBtn.addEventListener('click', function() {
+            const nextPage = loadMoreBtn.getAttribute('data-next-page');
+            
+            // 1. Ativa o spinner visualmente e trava o botão contra cliques duplos
+            loadMoreBtn.disabled = true;
+
+            // 2. Faz a busca no Django passando o número da próxima página
+            fetch(`?page=${nextPage}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                // Se o Django responder 404 (página vazia), remove o botão e encerra
+                if (response.status === 404) {
+                    loadMoreBtn.remove();
+                    return null;
+                }
+                
+                // Se a View avisar no cabeçalho que é a última página, guarda essa info
+                if (response.headers.get('X-Last-Page') === 'true') {
+                    loadMoreBtn.setAttribute('data-is-last', 'true');
+                }
+                
+                return response.text();
+            })
+            .then(html => {
+                // Se o HTML vier em branco, remove o botão
+                if (!html || html.trim() === '') {
+                    loadMoreBtn.remove();
+                    return;
+                }
+
+                // 3. Injeta os novos cards de posts no final do container
+                postsContainer.insertAdjacentHTML('beforeend', html);
+
+                // Se era a última página de posts, remove o botão da tela
+                if (loadMoreBtn.getAttribute('data-is-last') === 'true') {
+                    loadMoreBtn.remove();
+                    return;
+                }
+
+                // 4. Atualiza o número para o próximo clique (ex: de 2 para 3)
+                const updatedPage = parseInt(nextPage) + 1;
+                loadMoreBtn.setAttribute('data-next-page', updatedPage);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar posts:', error);
+                loadMoreBtn.remove();
+            })
+            .finally(() => {
+                // 5. Se o botão ainda existir, esconde o spinner e reativa o clique
+                if (document.getElementById('load-more-btn')) {
+                    loadMoreBtn.disabled = false;
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

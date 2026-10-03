@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Contato{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-16">
+    <header class="text-center mb-12">
+        <h1 class="font-display text-4xl font-bold text-brand-dark mb-4">Fale Conosco</h1>
+        <p class="text-brand-dark/70">Dúvidas, sugestões, parcerias ou apenas para dar um oi? Escreva para a gente!</p>
+    </header>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-2xl mb-8 text-sm text-center font-medium animate-pulse">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="bg-white p-8 rounded-3xl border border-brand-blush/20 shadow-sm space-y-6">
+        {% comment %} {% csrf_secret_token %} {% endcomment %}
+        {% csrf_token %}
+        <div>
+            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Seu Nome</label>
+            <input type="text" name="name" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de nome">
+        </div>
+
+        <div>
+            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Seu E-mail</label>
+            <input type="email" name="email" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de email">
+        </div>
+
+        <div>
+            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Assunto</label>
+            <input type="text" name="subject" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de assunto">
+        </div>
+
+        <div>
+            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Mensagem</label>
+            <textarea name="message" rows="5" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition resize-none" aria-label="área de texto de mensagem"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-terracotta text-white font-semibold py-3 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm">
+            Enviar Mensagem
+        </button>
+    </form>
+</div>
+{% endblock %}

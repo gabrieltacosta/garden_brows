@@ -1,0 +1,17 @@
+<article class="bg-white rounded-2xl overflow-hidden border border-brand-blush/20 shadow-sm hover:shadow-md transition flex flex-col h-full">
+    {% if post.image_cover %}
+        <img src="{{ post.image_cover.url }}" class="h-48 w-full object-cover" alt="{{ post.title }}" loading="lazy">
+    {% endif %}
+    <div class="p-5 grow flex flex-col justify-between">
+        <div>
+            <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.created_at|date:"d M, Y" }}</span>
+            <h3 class="font-display text-lg font-bold text-brand-dark mt-1 mb-2 hover:text-brand-terracotta transition">
+                <a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a>
+            </h3>
+            <p class="text-sm text-brand-dark/70 line-clamp-2 mb-4">{{ post.description }}</p>
+        </div>
+        <a href="{% url 'blog:detail' post.slug %}" class="text-xs font-bold text-brand-dark uppercase tracking-widest border-b border-brand-terracotta pb-1 self-start hover:text-brand-terracotta transition">
+            Ler Mais &rarr;
+        </a>
+    </div>
+</article>

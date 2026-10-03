@@ -1,0 +1,28 @@
+<footer class="bg-brand-dark text-brand-light mt-20 pt-12 pb-6">
+    <div class="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
+        <div>
+            <a href="/"><h3 class="font-display text-2xl font-bold mb-4">GardenBrows</h3></a>
+            <p class="text-sm text-brand-light/70">O seu espaço seguro de dicas, inspiração e tudo que envolve o nosso universo.</p>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-brand-blush">Links Úteis</h4>
+            <ul class="space-y-2 text-sm text-brand-light/80">
+                <li><a href="{% url 'blog:privacy' %}" class="hover:text-brand-blush transition">Política de Privacidade</a></li>
+                <li><a href="{% url 'blog:terms' %}" class="hover:text-brand-blush transition">Termos de Uso</a></li>
+                <li><a href="{% url 'blog:contact' %}" class="hover:text-brand-blush transition">Fale Conosco</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-brand-blush">Conecte-se</h4>
+            <div class="flex justify-center sm:justify-start gap-4 text-xl">
+                <a href="#" class="hover:text-brand-blush transition" aria-label="Instagran"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-brand-blush transition" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+                <a href="#" class="hover:text-brand-blush transition" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="border-t border-brand-light/10 mt-12 pt-6 text-center text-xs text-brand-light/50">
+        <p>&copy; {% now "Y" %} GardenBrows. Feito com amor e propósito.</p>
+        <p>Todos os direitos reservados.</p>
+    </div>
+</footer>

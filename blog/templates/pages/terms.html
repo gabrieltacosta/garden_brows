@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Termos de Uso{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-6 py-16">
+    <article class="prose prose-neutral prose-headings:font-display prose-headings:text-brand-dark text-brand-dark/80">
+        <h1>Termos de Uso</h1>
+        <p class="text-xs text-brand-dark/50">Última atualização: {% now "d/m/Y" %}</p>
+        
+        <p>Seja muito bem-vinda ao <strong>GardenBrows</strong>. Ao acessar e ler os conteúdos do nosso blog, você concorda e aceita cumprir os seguintes termos e condições de uso.</p>
+        
+        <h2>1. Propriedade Intelectual</h2>
+        <p>Todo o conteúdo publicado neste blog (textos, imagens exclusivas, identidade visual) é de propriedade intelectual do GardenBrows, a menos que seja indicado o contrário. É proibida a reprodução parcial ou total para fins comerciais sem autorização expressa.</p>
+        
+        <h2>2. Uso Aceitável</h2>
+        <p>Este blog foi feito para ser um espaço seguro de troca e inspiração. Comentários contendo ofensas, preconceito, spam ou links maliciosos serão moderados e excluídos imediatamente por nossa equipe.</p>
+    </article>
+</div>
+{% endblock %}

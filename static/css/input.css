@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* Cores Customizadas do Blog */
+  --color-brand-light: #FFF5F5;
+  --color-brand-blush: #F3C5C5;
+  --color-brand-terracotta: #D38B8B;
+  --color-brand-dark: #2D2222;
+
+  /* Fontes Customizadas */
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Playfair Display", serif;
+}
+
+/* Ajustes finos adicionais se desejar */
+.prose img {
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}

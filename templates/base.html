@@ -1,0 +1,35 @@
+{% load static %}
+{% load pwa %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %} | GardenBrows</title>
+    <meta name="description" content="{% block meta_description %}O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino.{% endblock %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}GardenBrows - Universo Feminino{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Dicas, inspiração e tudo sobre o universo feminino.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'img/default-share.png' %}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}">
+    <!-- Manifesto PWA -->
+    {% progressive_web_app_meta %}
+</head>
+<body class="bg-brand-light text-brand-dark flex flex-col min-h-screen font-sans">
+
+    {% include "components/navbar.html" %}
+
+    <main class="grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "components/footer.html" %}
+
+</body>
+</html>

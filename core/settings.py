@@ -312,10 +312,10 @@ PWA_APP_CATEGORIES = ['lifestyle', 'beauty', 'health']  # Categorias oficiais ac
 PWA_APP_DEBUG_MODE = False  # Desativa o modo de depuração para produção
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Toda Garota Blog Admin",
-    "site_header": "Toda Garota Blog",
-    "site_brand": "Toda Garota Blog",
-    "site_logo": "/img/logo-96x96.png",
+    "site_title": "GardenBrows Blog Admin",
+    "site_header": "GardenBrows Blog",
+    "site_brand": "GardenBrows Blog",
+    # "site_logo": "/img/logo-96x96.png",
     "login_logo": None,
     "icons": {
         "auth": "fas fa-users-cog",
@@ -327,6 +327,6 @@ JAZZMIN_SETTINGS = {
     },
     "user_avatar": "avatar_url",  # Função para obter o avatar do usuário
     "custom_css": "css/custom_admin.css",
-    "welcome_sign": "Bem-vindo(a) ao Toda Garota Blog",
-    "copyright": "Toda Garota Blog",
+    "welcome_sign": "Bem-vindo(a) ao GardenBrows Blog",
+    "copyright": "GardenBrows Blog",
 }

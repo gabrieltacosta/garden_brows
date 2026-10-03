@@ -27,7 +27,6 @@ urlpatterns = [
     path("robots.txt", lambda r: HttpResponse("User-agent: *\nDisallow: /admin/\nDisallow: /ckeditor5/\n\nSitemap: https://todagarota.com.br/sitemap.xml", 
             content_type="text/plain")),
    re_path("", include('pwa.urls')),
-   re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
 
 

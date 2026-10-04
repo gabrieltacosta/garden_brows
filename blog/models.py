@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
 from django.urls import reverse
 from django_ckeditor_5.fields import CKEditor5Field
-from .utils import get_image_upload_path, get_cover_upload_path, compress_and_convert_to_webp, generate_cuid
+from .utils import get_materials_upload_path, get_image_upload_path, get_cover_upload_path, compress_and_convert_to_webp, generate_cuid
 
 
 
@@ -150,3 +150,60 @@ class Post(models.Model):
     # Retorna pelo menos 1 minuto se houver texto
         tempo = round(minutos)
         return max(tempo, 1)
+
+
+class Material(models.Model):
+    id = models.CharField(primary_key=True, default=generate_cuid, editable=False, max_length=50)
+    title = models.CharField(max_length=100, verbose_name="Título")
+    slug = models.SlugField(max_length=100, unique=True, blank=True, help_text="Gerado automaticamente se deixado em branco.")
+    description = models.TextField(help_text="Breve explicação do material para aparecer no card.", verbose_name="Descrição")
+    file = models.FileField(upload_to=get_materials_upload_path, blank=True,
+        null=True, verbose_name="Arquivo (PDF, Planilha, etc.)", help_text="Faça o upload caso seja um arquivo direto.")
+    external_link = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name="Link Externo",
+        help_text="Use caso o material esteja no Google Drive, Notion, Canva, etc."
+    )
+    image = models.ImageField(upload_to=get_materials_upload_path, blank=True, null=True, verbose_name="Imagem de Capa / Ilustração")
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Ativo",
+        help_text="Marque para exibir este material na homepage e na página de materiais."
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Ordem de exibição",
+        help_text="Materiais com menor número aparecem primeiro (0, 1, 2...)."
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Atualizado em")
+
+    class Meta:
+        verbose_name = "Material"
+        verbose_name_plural = "Materiais"
+        ordering = ['order', '-created_at']
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+            if not self.slug:
+                self.slug = slugify(self.title)
+
+            if self.image and not self.image.name.endswith('.webp'):
+                        compress_and_convert_to_webp(self.image, max_width=1200, quality=80, is_avatar=False)
+
+            super().save(*args, **kwargs)
+
+    @property
+    def access_url(self):
+        """Retorna a URL do arquivo de download ou o link externo."""
+        if self.file:
+            return self.file.url
+        return self.external_link or "#"
+
+    @property
+    def is_external(self):
+        """Indica se é um link externo (para saber se abre em nova aba)."""
+        return bool(self.external_link and not self.file)

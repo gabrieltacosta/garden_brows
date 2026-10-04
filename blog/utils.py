@@ -58,3 +58,6 @@ def get_image_upload_path(instance, filename):
 
 def get_cover_upload_path(instance, filename):
     return os.path.join('post', instance.id, filename)
+
+def get_materials_upload_path(instance, filename):
+    return os.path.join('materials', instance.id, filename)

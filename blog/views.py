@@ -16,7 +16,7 @@ from django.utils.text import slugify
 from PIL import Image
 from django.views.decorators.cache import cache_page
 
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, Material
 from django.views.generic import DetailView
 
 
@@ -105,7 +105,8 @@ def home(request):
     posts_published = list(Post.objects.filter(status='published').order_by('-created_at'))
     featured_post = posts_published[0] if posts_published else None
     recent_posts = posts_published[1:4] if len(posts_published) > 1 else []
-    return render(request, "home.html", {'featured_post': featured_post, 'recent_posts': recent_posts})
+    materials = Material.objects.filter(is_active=True)
+    return render(request, "home.html", {'featured_post': featured_post, 'recent_posts': recent_posts, 'materials': materials})
 
 
 

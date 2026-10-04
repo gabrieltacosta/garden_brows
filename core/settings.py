@@ -215,8 +215,8 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
 
-PWA_APP_NAME = 'Toda Garota Blog'
-PWA_APP_SHORT_NAME = 'Toda Garota'
+PWA_APP_NAME = 'Garden Brows Blog'
+PWA_APP_SHORT_NAME = 'Garden Brows'
 PWA_APP_DESCRIPTION = "O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino."
 PWA_APP_THEME_COLOR = '#D38B8B'
 PWA_APP_BACKGROUND_COLOR = '#FFF5F5'
@@ -227,26 +227,26 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 
 PWA_APP_ICONS = [
-    {
-        "src": "/static/img/logo-48x48.png",
-        "sizes": "48x48",
-        "type": "image/png",
-    },
-    {
-        "src": "/static/img/logo-72x72.png",
-        "sizes": "72x72",
-        "type": "image/png",
-    },
-    {
-        "src": "/static/img/logo-96x96.png",
-        "sizes": "96x96",
-        "type": "image/png",
-    },
-    {
-        "src": "/static/img/logo-144x144.png",
-        "sizes": "144x144",
-        "type": "image/png",
-    },
+    # {
+    #     "src": "/static/img/logo-48x48.png",
+    #     "sizes": "48x48",
+    #     "type": "image/png",
+    # },
+    # {
+    #     "src": "/static/img/logo-72x72.png",
+    #     "sizes": "72x72",
+    #     "type": "image/png",
+    # },
+    # {
+    #     "src": "/static/img/logo-96x96.png",
+    #     "sizes": "96x96",
+    #     "type": "image/png",
+    # },
+    # {
+    #     "src": "/static/img/logo-144x144.png",
+    #     "sizes": "144x144",
+    #     "type": "image/png",
+    # },
     {
         "src": "/static/img/logo-192x192.png",
         "sizes": "192x192",
@@ -258,49 +258,49 @@ PWA_APP_ICONS = [
         "type": "image/png",
         "purpose": "any",
     },
-    {
-        "src": "/static/img/logo-512x512-maskable.png",
-        "sizes": "512x512",
-        "type": "image/png",
-        "purpose": "maskable",
-    },
+    # {
+    #     "src": "/static/img/logo-512x512-maskable.png",
+    #     "sizes": "512x512",
+    #     "type": "image/png",
+    #     "purpose": "maskable",
+    # },
 ]
 
 PWA_APP_ICONS_APPLE = [
     {
-        "src": "/static/img/logo-160x160.png",
-        "sizes": "160x160",
+        "src": "/static/img/logo-192x192.png",
+        "sizes": "192x192",
         "type": "image/png"
     }
 ]
 
-PWA_APP_SCREENSHOTS = [
-    {
-        "src": "/static/img/desktop.png",
-        "sizes": "1920x911",
-        "type": "image/png",
-        "form_factor": "wide",
-        "label": "Desktop View",
-    },
-    {
-        "src": "/static/img/mobile.png",
-        "sizes": "378x869",
-        "type": "image/png",
-        "form_factor": "narrow",
-        "label": "Mobile View",
-    },
-]
+# PWA_APP_SCREENSHOTS = [
+#     {
+#         "src": "/static/img/desktop.png",
+#         "sizes": "1920x911",
+#         "type": "image/png",
+#         "form_factor": "wide",
+#         "label": "Desktop View",
+#     },
+#     {
+#         "src": "/static/img/mobile.png",
+#         "sizes": "378x869",
+#         "type": "image/png",
+#         "form_factor": "narrow",
+#         "label": "Mobile View",
+#     },
+# ]
 
 PWA_APP_SHORTCUTS = [
     {
-        'name': 'Toda Garota Blog',
-        'short_name': 'Toda Garota',
+        'name': 'Garden Brows Blog',
+        'short_name': 'Garden Brows',
         'description': 'O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino.',
         'url': '/',
         "icons": [
             {
-            "src": "/static/img/logo-96x96.png",
-            "sizes": "96x96",
+            "src": "/static/img/logo-192x192.png",
+            "sizes": "192x192",
             "type": "image/png"
             }
         ]
@@ -324,6 +324,7 @@ JAZZMIN_SETTINGS = {
         "blog.Post": "fas fa-newspaper",
         "blog.Category": "fas fa-layer-group",
         "blog.Tag": "fas fa-tags",
+        "blog.Material": "fas fa-file-pdf",
     },
     "user_avatar": "avatar_url",  # Função para obter o avatar do usuário
     "custom_css": "css/custom_admin.css",

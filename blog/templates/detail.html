@@ -53,10 +53,11 @@
     {% endif %}
 </header>
 
-    <div class="container mx-auto px-6 max-w-4xl prose prose-neutral lg:prose-lg prose-headings:font-display prose-headings:text-brand-dark text-brand-dark/90 selection:bg-brand-blush">
+    <div class="container max-w-6xl mx-auto px-6 prose prose-neutral lg:prose-lg prose-headings:font-display prose-headings:text-brand-dark text-brand-dark/90 selection:bg-brand-blush">
         {{ post.content|safe }}
     </div>
 </article>
+
 
 {% if post.tags.all %}
     <div class="container max-w-6xl mx-auto px-6 text-center">
@@ -72,11 +73,12 @@
     </div>
 {% endif %}
 
-<hr class="border-brand-blush/20 my-12">
+
 
 <div class="container max-w-6xl mx-auto px-6 text-center mb-12">
 
     {% if related_posts %}
+    <hr class="border-brand-blush/20 my-12">
     <div>
         <h3 class="font-display text-2xl font-bold text-brand-dark mb-6">Você também pode gostar</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -87,9 +89,9 @@
     </div>
     {% endif %}
 
-    <hr class="border-brand-blush/20 my-12">
-
+    
     {% if category_posts %}
+    <hr class="border-brand-blush/20 my-12">
     <div>
         <h3 class="font-display text-2xl font-bold text-brand-dark mb-2">Mais em <em>{{ post.category.name }}</em></h3>
         <p class="text-xs text-brand-dark/60 mb-6">Continue lendo sobre esse assunto</p>

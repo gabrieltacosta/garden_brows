@@ -1,0 +1,18 @@
+<!-- Bloco de Materiais em homepage.html -->
+<div class="bg-white rounded-2xl overflow-hidden border border-brand-blush/20 shadow-sm hover:shadow-md transition flex flex-col h-full">
+    {% if material.image %}
+        <img src="{{ material.image.url }}" class="h-52 w-full object-cover" alt="{{ material.title }}" loading="lazy">
+    {% endif %}
+    <div class="p-5 grow flex flex-col justify-between">
+        <div>
+            <h3 class="font-display text-lg font-bold text-brand-dark mt-1 mb-2">
+                {{ material.title }}
+            </h3>
+            <p class="text-sm text-brand-dark/70 line-clamp-2 mb-4 leading-relaxed">{{ material.description }}</p>
+        </div>
+        <a href="{{ material.access_url }}" {% if material.is_external %}target="_blank" rel="noopener noreferrer"{% else %}download{% endif %} 
+                   class="text-xs font-bold text-brand-dark uppercase tracking-widest border-b border-brand-terracotta pb-1 self-start hover:text-brand-terracotta transition">
+                    Baixar o material &rarr;
+        </a>
+    </div>
+</div>

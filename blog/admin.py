@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import Author
-from .models import Post, Category, Tag
+from .models import Author,Post, Category, Tag, Material
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -79,3 +78,13 @@ class CategoryAdmin(admin.ModelAdmin):
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(Material)
+class MaterialAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active', 'order', 'created_at')
+    list_editable = ('is_active', 'order')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'description')
+    prepopulated_fields = {"slug": ("title",)}
+    ordering = ['order', '-created_at']

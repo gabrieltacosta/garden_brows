@@ -3,7 +3,7 @@
 {% block title %}Início{% endblock title %}
 
 {% block content %}
-<div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 space-y-16">
+<div class="container max-w-6xl mx-auto px-4 py-8 md:py-12 space-y-16">
     
     <!-- Destaque Principal (Hero / Último Post) -->
     {% if featured_post %}
@@ -28,9 +28,9 @@
     </section>
     {% endif %}
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+    <div class="flex flex-col gap-12 mb-12 items-start">
 
-        <section class="lg:col-span-7 space-y-6 mb-12">
+        <section class="space-y-6">
             <h2 class="font-display text-2xl font-bold mb-6 border-l-4 border-brand-terracotta pl-3">Conteúdos Recentes</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {% for post in recent_posts %}
@@ -42,14 +42,13 @@
         </section>
 
         <!-- Materiais para Profissionais (Direita) -->
-        {% comment %} {% if materials %} {% endcomment %}
-            <section class="lg:col-span-5 space-y-6">
+            <section class="space-y-6">
                 <h2 class="font-display text-2xl font-bold mb-6 border-l-4 border-brand-terracotta pl-3">
-                    Materiais para profissionais
+                    Materiais para Profissionais
                 </h2>
-                <p class="text-brand-dark/70 text-sm leading-relaxed">
+                {% comment %} <p class="text-brand-dark/70 text-sm leading-relaxed">
                     Alguns conteúdos merecem sair da tela e virar ferramenta. Aqui você encontra materiais para colocar em prática aquilo que está aprendendo.
-                </p>
+                </p> {% endcomment %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <!-- Card de Materiais -->
                     
@@ -60,7 +59,6 @@
                     {% endfor %}
                 </div>
             </section>
-        {% comment %} {% endif %} {% endcomment %}
     </div>
 
 </div>

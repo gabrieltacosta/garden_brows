@@ -32,7 +32,7 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     # Força o redirecionamento permanente (301) de HTTP para HTTPS
-    SECURE_SSL_REDIRECT = True  # Defina como True em produção
+#    SECURE_SSL_REDIRECT = True  # Defina como True em produção
 
     # Isenta a rota /health/ do redirecionamento para HTTPS
     SECURE_REDIRECT_EXEMPT = [r'^health/$']
@@ -114,7 +114,7 @@ DATABASES = {
         'USER': config("POSTGRES_USER", default="postgres"),
         'PASSWORD': config("POSTGRES_PASSWORD", default="postgres"),
         'HOST': config("POSTGRES_HOST", default="localhost"),
-        'PORT': config("POSTGRES_PORT", default="5432", cast=int),
+        'PORT': "5433",
     }
 }
 
@@ -122,7 +122,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://localhost:6379/1",  # Use a porta padrão do Redis
+        "LOCATION": "redis://localhost:6380/1",  # Use a porta padrão do Redis
     }
 }
 

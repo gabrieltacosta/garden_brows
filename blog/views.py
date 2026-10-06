@@ -196,7 +196,7 @@ def contact_view(request):
             subject=f"Contato do Blog: {subject}",
             message=f"Nome: {name}\nEmail: {email}\n\nMensagem:\n{message}",
             from_email=None,
-            recipient_list=['gabriel.tuka@gmail.com'],
+            recipient_list=['carolina.moraes1991@gmail.com'],
             fail_silently=False,
         )
         

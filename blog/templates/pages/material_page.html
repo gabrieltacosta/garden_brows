@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Materiais para Profissionais{% endblock title %}
+
+{% block content %}
+<div class="container max-w-6xl mx-auto px-4 py-12">
+    <header class="text-center mb-12">
+        <h1 class="font-display text-2xl md:text-4xl font-bold text-brand-dark mb-4">Materiais para Profissionais</h1>
+        <p class="text-brand-dark/70 max-w-xl mx-auto">Alguns conteúdos merecem sair da tela e virar ferramenta. Aqui você encontra materiais para colocar em prática aquilo que está aprendendo.</p>
+    </header>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- Card de Materiais -->
+        
+        {% for material in materials %}
+            {% include "components/material_card.html" with material=material %}
+        {% empty %}
+            <p class="text-center text-sm text-brand-dark/50 col-span-full">Mais materiais em breve!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

@@ -239,3 +239,11 @@ def tag_detail(request, slug):
 
 def not_found(request, exception):
     return render(request, 'not_found.html')
+
+
+def material_page(request):
+    if request.method == 'GET':
+        materials = Material.objects.filter(is_active=True)
+        return render(request, 'pages/material_page.html', {'materials': materials})
+
+    

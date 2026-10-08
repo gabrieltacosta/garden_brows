@@ -6,12 +6,16 @@
 <div class="container max-w-6xl mx-auto px-4 py-12">
     
     <header class="text-center mb-12">
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-4">Universo GardenBrows</h1>
+        <h1 class="font-display text-2xl md:text-4xl font-bold text-brand-dark mb-4">Universo GardenBrows</h1>
         <p class="text-brand-dark/70 max-w-xl mx-auto">Explore todas as nossas dicas, inspirações, tendências e conversas sobre o nosso mundo.</p>
     </header>
 
     <div id="posts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
-        {% include 'components/post_grid_items.html' %}
+        {% if page_obj %}
+            {% include 'components/post_grid_items.html' %}
+        {% else %}
+            <p class="text-center text-sm text-brand-dark/50 col-span-full">Mais posts em breve!</p>
+        {% endif %}
     </div>
 
     <div class="text-center">

@@ -26,6 +26,8 @@
             </a>
         </div>
     </section>
+    {% else %}
+        <p class="text-center text-sm text-brand-dark/50">Nenhum post em destaque no momento.</p>
     {% endif %}
 
     <div class="flex flex-col gap-12 mb-12 items-start">
@@ -42,7 +44,7 @@
         </section>
 
         <!-- Materiais para Profissionais (Direita) -->
-            <section class="space-y-6">
+            {% comment %} <section class="space-y-6">
                 <h2 class="font-display text-2xl font-bold mb-6 border-l-4 border-brand-terracotta pl-3">
                     Materiais para Profissionais
                 </h2>
@@ -58,7 +60,7 @@
                         <p class="text-center text-sm text-brand-dark/50 col-span-full">Mais materiais em breve!</p>
                     {% endfor %}
                 </div>
-            </section>
+            </section> {% endcomment %}
     </div>
 
 </div>

@@ -8,30 +8,13 @@
     <!-- Destaque Principal (Hero / Último Post) -->
     {% if featured_post %}
     <section class="bg-white rounded-2xl overflow-hidden border border-brand-blush/20 shadow-sm mb-12 grid grid-cols-1 md:grid-cols-2">
-        {% if featured_post.image_cover %}
-            <div class="h-64 md:h-full min-h-62.5">
-                <img src="{{ featured_post.image_cover.url }}" class="w-full h-full max-h-125 object-cover" alt="{{ featured_post.title }}">
-            </div>
-        {% endif %}
-        <div class="p-6 md:p-12 flex flex-col justify-center">
-            <span class="text-xs font-bold text-brand-terracotta uppercase tracking-widest bg-brand-light px-3 py-1 rounded-full self-start mb-4">Última Novidade</span>
-            <h1 class="font-display text-2xl md:text-4xl font-bold mb-4 text-brand-dark">
-                <a href="{% url 'blog:detail' featured_post.slug %}" class="hover:text-brand-terracotta transition">
-                    {{ featured_post.title }}
-                </a>
-            </h1>
-            <p class="text-brand-dark/70 mb-6 text-sm md:text-base">{{ featured_post.description }}</p>
-            <a href="{% url 'blog:detail' featured_post.slug %}" class="bg-brand-terracotta text-white text-center text-sm font-semibold px-6 py-3 rounded-full hover:bg-brand-dark transition md:self-start">
-                Ler o Primeiro Artigo
-            </a>
-        </div>
+        {% include "components/hero_card.html" with featured_post=featured_post %}
     </section>
     {% else %}
         <p class="text-center text-sm text-brand-dark/50">Nenhum post em destaque no momento.</p>
     {% endif %}
 
     <div class="flex flex-col gap-12 mb-12 items-start">
-
         <section class="space-y-6">
             <h2 class="font-display text-2xl font-bold mb-6 border-l-4 border-brand-terracotta pl-3">Conteúdos Recentes</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -42,26 +25,6 @@
                 {% endfor %}
             </div>
         </section>
-
-        <!-- Materiais para Profissionais (Direita) -->
-            {% comment %} <section class="space-y-6">
-                <h2 class="font-display text-2xl font-bold mb-6 border-l-4 border-brand-terracotta pl-3">
-                    Materiais para Profissionais
-                </h2>
-                <p class="text-brand-dark/70 text-sm leading-relaxed">
-                    Alguns conteúdos merecem sair da tela e virar ferramenta. Aqui você encontra materiais para colocar em prática aquilo que está aprendendo.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- Card de Materiais -->
-                    
-                    {% for material in materials %}
-                        {% include "components/material_card.html" with material=material %}
-                    {% empty %}
-                        <p class="text-center text-sm text-brand-dark/50 col-span-full">Mais materiais em breve!</p>
-                    {% endfor %}
-                </div>
-            </section> {% endcomment %}
     </div>
-
 </div>
 {% endblock %}

@@ -216,8 +216,9 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
 
 PWA_APP_NAME = 'Garden Brows Blog'
+PWA_APP_ID = 'com.gardenbrows.blog'
 PWA_APP_SHORT_NAME = 'Garden Brows'
-PWA_APP_DESCRIPTION = "O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino."
+PWA_APP_DESCRIPTION = "Experiência guardada vira lembrança. Experiência compartilhada pode virar aprendizado."
 PWA_APP_THEME_COLOR = '#D38B8B'
 PWA_APP_BACKGROUND_COLOR = '#FFF5F5'
 PWA_APP_DISPLAY = 'standalone'
@@ -227,26 +228,26 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 
 PWA_APP_ICONS = [
-    # {
-    #     "src": "/static/img/logo-48x48.png",
-    #     "sizes": "48x48",
-    #     "type": "image/png",
-    # },
-    # {
-    #     "src": "/static/img/logo-72x72.png",
-    #     "sizes": "72x72",
-    #     "type": "image/png",
-    # },
-    # {
-    #     "src": "/static/img/logo-96x96.png",
-    #     "sizes": "96x96",
-    #     "type": "image/png",
-    # },
-    # {
-    #     "src": "/static/img/logo-144x144.png",
-    #     "sizes": "144x144",
-    #     "type": "image/png",
-    # },
+    {
+         "src": "/static/img/logo-48x48.png",
+         "sizes": "48x48",
+         "type": "image/png",
+    },
+    {
+         "src": "/static/img/logo-72x72.png",
+         "sizes": "72x72",
+         "type": "image/png",
+    },
+    {
+         "src": "/static/img/logo-96x96.png",
+         "sizes": "96x96",
+         "type": "image/png",
+    },
+    {
+         "src": "/static/img/logo-144x144.png",
+         "sizes": "144x144",
+         "type": "image/png",
+    },
     {
         "src": "/static/img/logo-192x192.png",
         "sizes": "192x192",
@@ -258,12 +259,6 @@ PWA_APP_ICONS = [
         "type": "image/png",
         "purpose": "any",
     },
-    # {
-    #     "src": "/static/img/logo-512x512-maskable.png",
-    #     "sizes": "512x512",
-    #     "type": "image/png",
-    #     "purpose": "maskable",
-    # },
 ]
 
 PWA_APP_ICONS_APPLE = [
@@ -274,48 +269,81 @@ PWA_APP_ICONS_APPLE = [
     }
 ]
 
-# PWA_APP_SCREENSHOTS = [
-#     {
-#         "src": "/static/img/desktop.png",
-#         "sizes": "1920x911",
-#         "type": "image/png",
-#         "form_factor": "wide",
-#         "label": "Desktop View",
-#     },
-#     {
-#         "src": "/static/img/mobile.png",
-#         "sizes": "378x869",
-#         "type": "image/png",
-#         "form_factor": "narrow",
-#         "label": "Mobile View",
-#     },
-# ]
+PWA_APP_SCREENSHOTS = [
+     {
+         "src": "/static/img/screenshots/desktop_home.png",
+         "sizes": "1914x939",
+         "type": "image/png",
+         "form_factor": "wide",
+         "label": "Desktop View",
+     },
+       {
+         "src": "/static/img/screenshots/desktop_archive.png",
+         "sizes": "1914x939",
+         "type": "image/png",
+         "form_factor": "wide",
+         "label": "Desktop View",
+     },
+       {
+         "src": "/static/img/screenshots/desktop_material.png",
+         "sizes": "1914x939",
+         "type": "image/png",
+         "form_factor": "wide",
+         "label": "Desktop View",
+     },
+     {
+         "src": "/static/img/screenshots/mobile_home.png",
+         "sizes": "404x871",
+         "type": "image/png",
+         "form_factor": "narrow",
+         "label": "Mobile View",
+     },
+       {
+         "src": "/static/img/screenshots/mobile_archive.png",
+         "sizes": "404x871",
+         "type": "image/png",
+         "form_factor": "narrow",
+         "label": "Mobile View",
+     },
+       {
+         "src": "/static/img/screenshots/mobile_material.png",
+         "sizes": "404x871",
+         "type": "image/png",
+         "form_factor": "narrow",
+         "label": "Mobile View",
+     },
+]
 
 PWA_APP_SHORTCUTS = [
     {
         'name': 'Garden Brows Blog',
         'short_name': 'Garden Brows',
-        'description': 'O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino.',
+        'description': 'Experiência guardada vira lembrança. Experiência compartilhada pode virar aprendizado.',
         'url': '/',
         "icons": [
             {
-            "src": "/static/img/logo-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-            }
+                "src": "/static/img/logo-192x192.png",
+                "sizes": "192x192",
+                "type": "image/png"
+            },
+            {
+                "src": "/static/img/logo-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+            },
         ]
     },
 ]
 
 PWA_APP_LANG = 'pt-BR'
-PWA_APP_CATEGORIES = ['lifestyle', 'beauty', 'health']  # Categorias oficiais aceitas
+PWA_APP_CATEGORIES = ['lifestyle', 'beauty', 'health', 'business']  # Categorias oficiais aceitas
 PWA_APP_DEBUG_MODE = False  # Desativa o modo de depuração para produção
 
 JAZZMIN_SETTINGS = {
     "site_title": "GardenBrows Blog Admin",
     "site_header": "GardenBrows Blog",
     "site_brand": "GardenBrows Blog",
-    # "site_logo": "/img/logo-96x96.png",
+    "site_logo": "/img/logo-96x96.png",
     "login_logo": None,
     "icons": {
         "auth": "fas fa-users-cog",

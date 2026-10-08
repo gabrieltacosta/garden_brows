@@ -1,0 +1,26 @@
+{% if related_posts %}
+    <hr class="border-brand-blush/20 my-12">
+    <div>
+        <h3 class="font-display text-2xl font-bold text-brand-dark mb-6">Você também pode gostar</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for related in related_posts %}
+                {% include 'components/post_card.html' with post=related %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    
+    {% if category_posts %}
+    <hr class="border-brand-blush/20 my-12">
+    <div>
+        <h3 class="font-display text-2xl font-bold text-brand-dark mb-2">Mais em <em>{{ post.category.name }}</em></h3>
+        <p class="text-xs text-brand-dark/60 mb-6">Continue lendo sobre esse assunto</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for cat_post in category_posts %}
+                {% include 'components/post_card.html' with post=cat_post %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}

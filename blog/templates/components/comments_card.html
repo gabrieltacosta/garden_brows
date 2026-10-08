@@ -1,0 +1,131 @@
+<div class="max-w-3xl mx-auto">
+        <h3 class="font-display text-2xl font-bold text-brand-dark mb-8 flex items-center gap-2">
+            Comentários 
+            <span class="text-sm font-normal text-brand-dark/50 px-2.5 py-0.5 bg-brand-light rounded-full border border-brand-blush/40">
+                {{ comments.count|default:0 }}
+            </span>
+        </h3>
+
+        <!-- Formulário de Novo Comentário -->
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+            <div class="bg-brand-light/50 border border-brand-blush/20 rounded-2xl p-6 mb-10 shadow-sm">
+                <h4 class="text-sm font-bold text-brand-dark uppercase tracking-wider mb-4">Deixe seu comentário</h4>
+                <form method="post" class="flex flex-col gap-4">
+                    {% csrf_token %}
+                    <div>
+                        <input type="text" 
+                            name="name" 
+                            placeholder="Seu nome"
+                            required
+                            value="" 
+                            class="w-full p-4 rounded-xl border border-brand-blush/30 bg-white text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-terracotta/50 focus:border-brand-terracotta transition text-sm">
+                    </div>
+                    <div>
+                        <textarea 
+                            name="content" 
+                            rows="4" 
+                            required 
+                            placeholder="Escreva o que achou desta publicação..."
+                            class="w-full p-4 rounded-xl border border-brand-blush/30 bg-white text-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-terracotta/50 focus:border-brand-terracotta transition resize-y text-sm"></textarea>
+                    </div>
+                    {% if form.content.errors %}
+                        <p class="text-xs text-red-500 mt-1">{{ form.content.errors.0 }}</p>
+                    {% endif %}
+                    <div class="flex justify-end">
+                        <button type="submit" 
+                            class="bg-brand-terracotta text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm">
+                            Publicar comentário
+                        </button>
+                    </div>
+                </form>
+            </div>
+        {% comment %} {% else %}
+            <div class="bg-brand-light/30 border border-brand-blush/20 rounded-xl p-6 text-center mb-10">
+                <p class="text-sm text-brand-dark/70">
+                    Você precisa estar <a href="{% url 'login' %}?next={{ request.path }}" class="font-bold text-brand-terracotta hover:underline">logado</a> para deixar um comentário.
+                </p>
+            </div>
+        {% endif %} {% endcomment %}
+
+        <!-- Lista de Comentários Existentes -->
+        <div id="comments-container" class="space-y-6">
+            {% for comment in comments %}
+                <div class="comment-item p-5 rounded-2xl bg-white border border-brand-blush/20 shadow-sm flex gap-4" {% if forloop.counter > 3 %}style="display: none;"{% endif %} >
+                    <!-- Avatar do Autor do Comentário -->
+                    {% comment %} <div class="shrink-0">
+                        {% if comment.author.image %}
+                            <img src="{{ comment.author.image.url }}" 
+                                 alt="{{ comment.author.get_full_name }}" 
+                                 class="w-10 h-10 rounded-full object-cover">
+                        {% else %}
+                            <div class="w-10 h-10 rounded-full bg-brand-blush/30 text-brand-terracotta font-bold flex items-center justify-center text-xs">
+                                {{ comment.author.first_name|slice:":1" }}{% if comment.author.last_name %}{{ comment.author.last_name|slice:":1" }}{% endif %}
+                            </div>
+                        {% endif %}
+                    </div> {% endcomment %}
+
+                    <!-- Conteúdo do Comentário -->
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between mb-1">
+                            <h5 class="text-sm font-bold text-brand-dark">
+                                {{ comment.name|default:"Anônimo" }}
+                            </h5>
+                            <span class="text-xs text-brand-dark/40">
+                                {{ comment.created_at|date:"d/m/Y" }}
+                            </span>
+                        </div>
+                        <p class="text-sm text-brand-dark/80 leading-relaxed">
+                            {{ comment.content|linebreaksbr }}
+                        </p>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-sm text-brand-dark/50 py-8 italic">
+                    Nenhum comentário ainda. Seja o primeiro a comentar!
+                </p>
+            {% endfor %}
+        </div>
+        <!-- Botão Carregar Mais Comentários -->
+        {% if comments.count > 3 %}
+            <div class="mt-8 text-center" id="load-more-wrapper">
+                <button type="button" 
+                    id="load-more-btn"
+                    onclick="loadMoreComments()" 
+                    class="bg-brand-light text-brand-dark hover:bg-brand-blush/30 text-sm font-bold px-6 py-2.5 rounded-xl border border-brand-blush/30 transition cursor-pointer shadow-sm inline-flex items-center gap-2">
+                    <span>Carregar mais comentários</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+            </div>
+        {% endif %}
+
+        <!-- Script para exibir de 3 em 3 -->
+        <script>
+            function loadMoreComments() {
+                // Seleciona os comentários que estão ocultos via style="display: none;"
+                const hiddenComments = Array.from(document.querySelectorAll('.comment-item')).filter(
+                    el => el.style.display === 'none'
+                );
+
+                const itemsToLoad = 3;
+
+                // Exibe os próximos 3 comentários
+                for (let i = 0; i < itemsToLoad && i < hiddenComments.length; i++) {
+                    hiddenComments[i].style.display = 'flex';
+                }
+
+                // Se não restarem mais comentários ocultos, esconde o botão
+                const remainingHidden = Array.from(document.querySelectorAll('.comment-item')).filter(
+                    el => el.style.display === 'none'
+                );
+
+                if (remainingHidden.length === 0) {
+                    const btnWrapper = document.getElementById('load-more-wrapper');
+                    if (btnWrapper) {
+                        btnWrapper.style.display = 'none';
+                    }
+                }
+            }
+        </script>
+    </div>

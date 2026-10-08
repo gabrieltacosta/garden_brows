@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -15,6 +16,8 @@ from django.core.files.base import ContentFile
 from django.utils.text import slugify
 from PIL import Image
 from django.views.decorators.cache import cache_page
+from django.urls import reverse
+from blog.forms import CommentForm
 
 from .models import Post, Category, Tag, Material
 from django.views.generic import DetailView
@@ -110,18 +113,29 @@ def home(request):
 
 
 
-class PostDetailView(DetailView):
+class PostDetailView(FormMixin, DetailView):
     model = Post
     template_name = 'detail.html'
     context_object_name = 'post'
+    form_class = CommentForm
 
     def get_queryset(self):
         # Garante que a busca inicial só traga posts publicados
         return super().get_queryset().filter(status='published')
 
+    def get_success_url(self):
+        # Redireciona de volta para a própria página do post após comentar
+        return reverse('blog:detail', kwargs={'slug': self.object.slug})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post_atual = self.object
+
+        if 'form' not in context:
+            context['form'] = self.get_form()
+
+        context['comments'] = post_atual.comments.filter(is_active=True).order_by('-created_at')
+
         tag_ids = post_atual.tags.values_list('id', flat=True)
         related_posts = Post.objects.filter(status='published', tags__in=tag_ids).exclude(id=post_atual.id)
         context['related_posts'] = related_posts.annotate(
@@ -137,6 +151,25 @@ class PostDetailView(DetailView):
             context['category_posts'] = None
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.post = self.object
+        comment.save()
+
+        messages.success(self.request, "Agradecemos sua contribuição. Ele será exibido assim que for aprovado por um moderador.")
+
+        return super().form_valid(form)
+
 
 # @cache_page(60 * 60)
 def post_archive(request):

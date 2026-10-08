@@ -325,6 +325,7 @@ JAZZMIN_SETTINGS = {
         "blog.Category": "fas fa-layer-group",
         "blog.Tag": "fas fa-tags",
         "blog.Material": "fas fa-file-pdf",
+        "blog.Comment": "fas fa-comments",
     },
     "user_avatar": "avatar_url",  # Função para obter o avatar do usuário
     "custom_css": "css/custom_admin.css",

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import Author,Post, Category, Tag, Material
+from .models import Author,Post, Category, Tag, Material, Comment
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -64,7 +64,14 @@ class PostAdmin(admin.ModelAdmin):
             if not change or not obj.author_id:
                 obj.author = request.user
         return super().save_model(request, obj, form, change)
-    
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'post', 'is_active', 'created_at')
+    search_fields = ('name', 'post', 'content')
+    list_filter = ('is_active',)
+    ordering = ['-created_at',]
 
 
 @admin.register(Category)

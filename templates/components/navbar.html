@@ -10,11 +10,11 @@
         </button>
 
         <div id="menu-bounds" class="hidden w-full md:flex md:items-center md:w-auto gap-6 text-sm font-medium text-brand-dark/80 pt-4 md:pt-0">
-            <a href="{% url 'blog:home' %}" class="block py-2 hover:text-brand-terracotta transition">Início</a>
-            <a href="{% url 'blog:archive' %}" class="block py-2 hover:text-brand-terracotta transition">Todos os Posts</a>
-            <a href="{% url 'blog:material_view' %}" class="block py-2 hover:text-brand-terracotta transition">Materiais</a>
+            <a href="{% url 'blog:home' %}" class="block py-2 {% if request.resolver_match.url_name == 'home' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Início</a>
+            <a href="{% url 'blog:archive' %}" class="block py-2 {% if request.resolver_match.url_name == 'archive' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Todos os Posts</a>
+            <a href="{% url 'blog:material_view' %}" class="block py-2 {% if request.resolver_match.url_name == 'material_view' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Materiais</a>
             {% comment %} <a href="#" class="block py-2 hover:text-brand-terracotta transition">Bem-Estar</a> {% endcomment %}
-            <a href="{% url 'blog:contact' %}" class="block py-2 hover:text-brand-terracotta transition">Contato</a>
+            <a href="{% url 'blog:contact' %}" class="block py-2 {% if request.resolver_match.url_name == 'contact' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Contato</a>
         </div>
     </div>
 </nav>

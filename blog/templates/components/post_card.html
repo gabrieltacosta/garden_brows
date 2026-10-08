@@ -4,7 +4,10 @@
     {% endif %}
     <div class="p-5 grow flex flex-col justify-between">
         <div>
-            <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.created_at|date:"d M, Y" }}</span>
+            <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.created_at|date:"d M, Y" }}</span>
+                <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.active_comments_count|default:"0" }} comentários</span>
+            </div>
             <h3 class="font-display text-lg font-bold text-brand-dark mt-1 mb-2 hover:text-brand-terracotta transition">
                 <a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a>
             </h3>

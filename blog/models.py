@@ -151,6 +151,9 @@ class Post(models.Model):
         tempo = round(minutos)
         return max(tempo, 1)
 
+    @property
+    def active_comments_count(self):
+        return self.comments.filter(is_active=True).count()
 
 class Material(models.Model):
     id = models.CharField(primary_key=True, default=generate_cuid, editable=False, max_length=50)
@@ -207,3 +210,32 @@ class Material(models.Model):
     def is_external(self):
         """Indica se é um link externo (para saber se abre em nova aba)."""
         return bool(self.external_link and not self.file)
+
+
+class Comment(models.Model):
+    id = models.CharField(primary_key=True, default=generate_cuid, editable=False, max_length=50)
+    name = models.CharField(max_length=100, verbose_name="Nome", default="Anônimo")
+    content = models.TextField(verbose_name="Comentário")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments", verbose_name="Post")
+    parent = models.ForeignKey(
+        'self', 
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True, 
+        related_name='replies'
+    )
+    is_active = models.BooleanField(default=False, verbose_name="Ativo", help_text="Marque para exibir este comentário.")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Criado em")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Atualizado em")
+    
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Comentário'
+        verbose_name_plural = 'Comentários'
+        indexes = [
+            models.Index(fields=['post', 'created_at']),
+        ]
+
+    def __str__(self):
+        return f'Comentário de {self.name} em {self.post.title}'

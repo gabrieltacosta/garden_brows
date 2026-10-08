@@ -9,8 +9,44 @@
   --color-brand-dark: #2D2222;
 
   /* Fontes Customizadas */
-  --font-sans: "Inter", sans-serif;
-  --font-display: "Playfair Display", serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-light);
+    color: var(--color-brand-dark);
+    font-family: var(--font-sans);
+    font-weight: 400; /* Peso padrão da Inter que você baixou */
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+.prose {
+  --tw-prose-body: #3d3131;
+  --tw-prose-headings: var(--color-brand-dark);
+  --tw-prose-links: var(--color-brand-terracotta);
+  --tw-prose-bold: var(--color-brand-dark);
+  --tw-prose-quotes: var(--color-brand-dark);
+  --tw-prose-quote-borders: var(--color-brand-blush);
+}
+
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700; /* Usa o peso 700 carregado no Playfair Display */
+}
+
+/* Estilo para citações em itálico com Playfair Display */
+.prose blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400; /* Usa o peso 400 em itálico baixado */
 }
 
 /* Ajustes finos adicionais se desejar */

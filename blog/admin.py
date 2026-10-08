@@ -69,6 +69,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'post', 'is_active', 'created_at')
+    list_editable = ('is_active',)
     search_fields = ('name', 'post', 'content')
     list_filter = ('is_active',)
     ordering = ['-created_at',]

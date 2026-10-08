@@ -132,7 +132,7 @@
         {% comment %} {% if user.is_authenticated %} {% endcomment %}
             <div class="bg-brand-light/50 border border-brand-blush/20 rounded-2xl p-6 mb-10 shadow-sm">
                 <h4 class="text-sm font-bold text-brand-dark uppercase tracking-wider mb-4">Deixe seu comentário</h4>
-                <form method="post" class="space-y-4">
+                <form method="post" class="flex flex-col gap-4">
                     {% csrf_token %}
                     <div>
                         <input type="text" 

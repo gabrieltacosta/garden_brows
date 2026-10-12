@@ -4,26 +4,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GKNZR653BF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-GKNZR653BF');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Home{% endblock %} | GardenBrows</title>
-    <meta name="description" content="{% block meta_description %}O seu espaço seguro de dicas, inspiração e tudo que envolve o universo feminino.{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Experiência guardada vira lembrança. Experiência compartilhada pode virar aprendizado.{% endblock %}">
+    <!-- Palavras-Chave Globais -->
+    <meta name="keywords" content="{% block meta_keywords %}atendimento na beleza, rotina de esteticista, gestão de studio de beleza, experiência do cliente, materiais para profissionais da beleza{% endblock meta_keywords %}">
+    <meta name="author" content="Carol Garden">
+    <!-- Canonical URL (Evita conteúdo duplicado no Google) -->
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}Início{% endblock %} | GardenBrows">
-    <meta property="og:description" content="{% block og_description %}Experiência guardada vira lembrança. Experiência compartilhada pode virar aprendizado.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Beleza & Prática{% endblock %} | GardenBrows">
+    <meta property="og:description" content="{% block og_description %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{% static 'img/og-logo.png' %}{% endblock %}">
+    <meta property="og:site_name" content="Beleza & Prática | GardenBrows">
+    <meta property="og:locale" content="pt_BR">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{% block title_tw %}Beleza & Prática{% endblock title_tw %}{% endblock twitter_title %} | GardenBrows">
+    <meta name="twitter:description" content="{% block twitter_description %}{% block meta_desc_tw %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock meta_desc_tw %}{% endblock twitter_description %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% block og_img_tw %}{% static 'img/og-logo.png' %}{% endblock og_img_tw %}{% endblock twitter_image %}">
+
     <link href="{% static 'css/output.css' %}" rel="stylesheet" >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <meta name="theme-color" content="#D38B8B">
     <!-- Manifesto PWA -->
     {% progressive_web_app_meta %}
 </head>
-<body class="bg-brand-light text-brand-dark flex flex-col min-h-screen font-sans">
+<body class="bg-brand-light text-brand-dark flex flex-col min-h-screen font-sans antialiased">
 
     {% include "components/navbar.html" %}
 

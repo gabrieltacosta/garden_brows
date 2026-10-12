@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /ckeditor5/
+
+Sitemap: https://gardenbrows.com.br/sitemap.xml

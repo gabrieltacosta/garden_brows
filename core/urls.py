@@ -4,9 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemaps import PostSitemap, StaticSitemap, CategorySitemap,TagSitemap
-from django.http import HttpResponse
+from django.views.generic.base import TemplateView
 from blog.views import ckeditor5_custom_upload
-from django.contrib.staticfiles.views import serve
+
 
 
 sitemaps = {
@@ -24,8 +24,7 @@ urlpatterns = [
     
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("sitemap.xml/", sitemap, {"sitemaps": sitemaps}),
-    path("robots.txt", lambda r: HttpResponse("User-agent: *\nDisallow: /admin/\nDisallow: /ckeditor5/\n\nSitemap: https://todagarota.com.br/sitemap.xml", 
-            content_type="text/plain")),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
    re_path("", include('pwa.urls')),
 ]
 

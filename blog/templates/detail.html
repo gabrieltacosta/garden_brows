@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ post.title }}{% endblock %}
-{% block meta_description %}{{ post.description }}{% endblock %}
+{% block meta_description %}{{ post.description|truncatewords:25 }}{% endblock %}
 
 {% block og_type %}article{% endblock %}
 {% block og_title %}{{ post.title }}{% endblock %}
 {% block og_description %}{{ post.description }}{% endblock %}
-{% block og_image %}{% if post.image_cover %}{{ post.image_cover.url }}{% endif %}{% endblock %}
+{% if post.image_cover %}
+    {% block og_image %}{{ request.scheme }}://{{ request.get_host }}{{ post.image_cover.url }}{% endblock %}
+    {% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{{ post.image_cover.url }}{% endblock twitter_image %}
+{% endif %}
 
 {% block content %}
 

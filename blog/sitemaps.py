@@ -22,7 +22,6 @@ class CategorySitemap(Sitemap):
         return Category.objects.filter(posts__status='published').distinct()
 
     def location(self, obj):
-        from django.urls import reverse
         return reverse('blog:category_detail', kwargs={'slug': obj.slug})
     
 
@@ -35,7 +34,6 @@ class TagSitemap(Sitemap):
         return Tag.objects.filter(posts__status='published').distinct()
     
     def location(self, obj):
-        from django.urls import reverse
         return reverse('blog:tag_detail', kwargs={'slug': obj.slug})
     
 

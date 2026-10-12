@@ -1,7 +1,9 @@
 <!-- Bloco de Materiais em homepage.html -->
-<div class="bg-white rounded-2xl overflow-hidden border border-brand-blush/20 shadow-sm hover:shadow-md transition flex flex-col h-full">
+<div class="bg-white rounded-2xl overflow-hidden border border-brand-blush/20 shadow-sm hover:shadow-md transition flex flex-col h-full group">
     {% if material.image %}
-            <img src="{{ material.image.url }}" class="h-48 w-full object-cover" alt="{{ material.title }}" loading="lazy">
+        <div class="overflow-hidden h-48 w-full">
+            <img src="{{ material.image.url }}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" alt="{{ material.title }}" loading="lazy">
+        </div>
     {% endif %}
     <div class="p-5 grow flex flex-col justify-between">
         <div>
@@ -11,7 +13,7 @@
             <p class="text-sm text-brand-dark/70 mb-4 leading-relaxed">{{ material.description|truncatewords:10 }}</p>
         </div>
         <a href="{{ material.access_url }}" {% if material.is_external %}target="_blank" rel="noopener noreferrer"{% else %}download{% endif %} 
-                   class="text-xs font-bold text-brand-dark uppercase tracking-widest border-b border-brand-terracotta pb-1 self-start hover:text-brand-terracotta transition">
+                   class="text-xs font-bold text-brand-dark uppercase tracking-widest border-b border-brand-terracotta pb-1 self-start hover:text-brand-terracotta transition" aria-label="Baixar o {{ material.title }}">
                     Baixar o material &rarr;
         </a>
     </div>

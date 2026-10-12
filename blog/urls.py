@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, PostDetailView, post_archive, PrivacyPolicyView, TermsOfUseView, contact_view, category_detail, tag_detail, material_page, healthcheck
+from .views import home, PostDetailView, post_archive, PrivacyPolicyView, TermsOfUseView, contact_view, category_detail, tag_detail, material_page, healthcheck, manually_clear_cache
 
 app_name = "blog"
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path("categoria/<slug:slug>/", category_detail, name="category_detail"),
     path("tag/<slug:slug>/", tag_detail, name="tag_detail"),
     path("materials/", material_page, name="material_view"),
+    path("limpar-cache/", manually_clear_cache, name="limpar_cache_manual"),
 ]

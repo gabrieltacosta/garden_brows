@@ -16,6 +16,8 @@ from django.core.files.base import ContentFile
 from django.utils.text import slugify
 from PIL import Image
 from django.views.decorators.cache import cache_page
+from django.contrib.admin.views.decorators import staff_member_required
+from django.core.cache import cache
 from django.urls import reverse
 from blog.forms import CommentForm
 
@@ -314,4 +316,10 @@ def material_page(request):
         materials = Material.objects.filter(is_active=True)
         return render(request, 'pages/material_page.html', {'materials': materials})
 
-    
+
+@staff_member_required
+def manually_clear_cache(request):
+    cache.clear()
+    messages.success(request, "Cache limpo com sucesso! Todas as páginas foram atualizadas.")
+    referer = request.META.get('HTTP_REFERER', 'admin:index')
+    return redirect(referer)

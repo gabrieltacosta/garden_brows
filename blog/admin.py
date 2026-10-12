@@ -28,7 +28,7 @@ admin.site.register(Author, CustomUserAdmin)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("image_thumbnail",'title', 'author','category', 'views_count', 'status', 'created_at')
+    list_display = ("image_thumbnail",'title', 'views_count', 'author','category', 'status', 'created_at')
     list_editable = ("status",)
     list_display_links = ("title",)
     list_filter = ('status', 'author', 'category', 'tags')

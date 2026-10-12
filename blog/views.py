@@ -107,7 +107,7 @@ def ckeditor5_custom_upload(request):
             
     return JsonResponse({'error': {'message': 'Método não permitido ou arquivo não enviado.'}}, status=400)
 
-# @cache_page(60 * 60)
+@cache_page(60 * 60 * 24)  # Cache de 24 horas
 def home(request):
     posts_published = list(Post.objects.filter(status='published').order_by('-created_at'))
     featured_post = posts_published[0] if posts_published else None
@@ -206,7 +206,7 @@ class PostDetailView(FormMixin, DetailView):
         return response
 
 
-# @cache_page(60 * 60)
+@cache_page(60 * 60 * 24)  # Cache de 24 horas
 def post_archive(request):
     # Pega todos os posts publicados
     posts_list = Post.objects.filter(status='published').order_by('-created_at')
@@ -274,7 +274,7 @@ def contact_view(request):
     return render(request, "pages/contact.html")
 
 
-
+@cache_page(60 * 60 * 24)  # Cache de 24 horas
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     # Busca apenas posts publicados dessa categoria
@@ -290,7 +290,7 @@ def category_detail(request, slug):
     })
 
 
-
+@cache_page(60 * 60 * 24)  # Cache de 24 horas
 def tag_detail(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     # Busca apenas posts publicados com essa tag

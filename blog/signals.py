@@ -1,7 +1,8 @@
 import os
 import shutil
-from django.db.models.signals import post_delete, pre_save
+from django.db.models.signals import post_delete, pre_save, post_save
 from django.dispatch import receiver
+from django.core.cache import cache
 from .models import Author, Post, Material
 
 
@@ -86,3 +87,8 @@ def delete_old_file_on_change(sender, instance, **kwargs):
 
     if old_material.image and old_material.image != instance.image:
         safe_remove_file(old_material.image)
+
+
+@receiver([post_save, post_delete], sender=Post)
+def clear_cache_posts(sender, instance, **kwargs):
+    cache.clear()

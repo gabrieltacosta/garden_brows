@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import Author,Post, Category, Tag, Material, Comment
+from .models import Author,Post, Category, Tag, Material, Comment, PostView
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -28,7 +28,7 @@ admin.site.register(Author, CustomUserAdmin)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("image_thumbnail",'title', 'author','category', 'status', 'created_at')
+    list_display = ("image_thumbnail",'title', 'author','category', 'views_count', 'status', 'created_at')
     list_editable = ("status",)
     list_display_links = ("title",)
     list_filter = ('status', 'author', 'category', 'tags')
@@ -46,6 +46,10 @@ class PostAdmin(admin.ModelAdmin):
                 obj.image_cover.url
             )
         return "Sem imagem"
+
+    @admin.display(description="Visualizações", ordering='views')
+    def views_count(self, obj):
+        return obj.views.count()
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -65,6 +69,16 @@ class PostAdmin(admin.ModelAdmin):
                 obj.author = request.user
         return super().save_model(request, obj, form, change)
 
+
+@admin.register(PostView)
+class PostViewAdmin(admin.ModelAdmin):
+    list_display = ('post', 'ip_address', 'created_at')
+    list_filter = ('post', 'created_at')
+    search_fields = ('post__title', 'ip_address')
+    ordering = ['-created_at']
+
+    def has_modeule_permission(self, request):
+        return request.user.is_superuser  # Apenas superusuários podem acessar o PostView no admin
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

@@ -43,6 +43,12 @@ if not DEBUG:
     # Protege o cookie do CSRF contra envio em conexões não-seguradas
     CSRF_COOKIE_SECURE = True 
 
+    # Define a política SameSite para os cookies de sessão e CSRF
+    SESSION_COOKIE_SAMESITE = "Lax"
+
+    # Define a política SameSite para os cookies de sessão e CSRF
+    CSRF_COOKIE_SAMESITE = "Lax"
+
     # Habilita o HSTS com duração de 1 ano (em segundos)
     SECURE_HSTS_SECONDS = 31536000  # 1 ano 
 
@@ -357,6 +363,7 @@ JAZZMIN_SETTINGS = {
         "blog.Tag": "fas fa-tags",
         "blog.Material": "fas fa-file-pdf",
         "blog.Comment": "fas fa-comments",
+        "blog.PostView": "fas fa-eye",
     },
     "user_avatar": "avatar_url",  # Função para obter o avatar do usuário
     "custom_css": "css/custom_admin.css",

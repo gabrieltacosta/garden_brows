@@ -239,3 +239,23 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comentário de {self.name} em {self.post.title}'
+
+
+
+class PostView(models.Model):
+    id = models.CharField(primary_key=True, default=generate_cuid, editable=False, max_length=50)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="views", verbose_name="Post")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="Endereço IP")
+    session_key = models.CharField(max_length=255, null=True, blank=True, verbose_name="Session Key")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Visualizado em")
+
+    class Meta:
+        verbose_name = "Visualização de Post"
+        verbose_name_plural = "Visualizações de Post"
+        indexes = [
+            models.Index(fields=['post', 'ip_address']),
+            models.Index(fields=['post', 'session_key']),
+        ]
+
+    def __str__(self):
+        return f'Visualização de {self.post.title} - {self.ip_address}'

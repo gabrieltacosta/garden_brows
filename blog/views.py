@@ -19,8 +19,12 @@ from django.views.decorators.cache import cache_page
 from django.urls import reverse
 from blog.forms import CommentForm
 
-from .models import Post, Category, Tag, Material
+from .models import Post, Category, Tag, Material, PostView
 from django.views.generic import DetailView
+
+from datetime import timedelta
+from django.utils import timezone
+from django.db import models
 
 
 def healthcheck(request):
@@ -169,6 +173,37 @@ class PostDetailView(FormMixin, DetailView):
         messages.success(self.request, "Agradecemos sua contribuição. Ele será exibido assim que for aprovado por um moderador.")
 
         return super().form_valid(form)
+
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        # Captura o IP do visitante
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        ip = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')
+
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.save()
+            session_key = request.session.session_key
+
+        # Registra apenas se não existir visualização desse IP ou Sessão nas últimas 24 horas
+        time_threshold = timezone.now() - timedelta(hours=24)
+        
+        has_viewed = PostView.objects.filter(
+            post=self.object,
+            created_at__gte=time_threshold
+        ).filter(
+            models.Q(ip_address=ip) | models.Q(session_key=session_key)
+        ).exists()
+
+        if not has_viewed:
+            PostView.objects.create(
+                post=self.object,
+                ip_address=ip,
+                session_key=session_key
+            )
+
+        return response
 
 
 # @cache_page(60 * 60)

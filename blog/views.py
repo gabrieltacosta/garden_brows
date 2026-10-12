@@ -20,10 +20,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
 from django.urls import reverse
 from blog.forms import CommentForm, ContactForm
-
+from django.conf import settings
 from .models import Post, Category, Tag, Material, PostView
 from django.views.generic import DetailView
-
 from datetime import timedelta
 from django.utils import timezone
 from django.db import models
@@ -268,7 +267,7 @@ def contact_view(request):
                     subject=f"Contato do Blog: {subject}",
                     message=f"Nome: {name}\nEmail: {email}\n\nMensagem:\n{message}",
                     from_email=None,
-                    recipient_list=['gabriel.tuka@gmail.com'],
+                    recipient_list=settings.ADMIN_EMAILS,
                     fail_silently=False,
                 )
                 messages.success(request, f"Obrigada, {name}! Sua mensagem foi enviada com sucesso. Responderemos em breve.")

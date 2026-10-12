@@ -224,6 +224,8 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="webmaster@localhost")
 
+ADMIN_EMAILS = [email.strip() for email in config("ADMIN_EMAILS", default="").split(",") if email.strip()]
+
 PWA_APP_NAME = 'Garden Brows Blog'
 PWA_APP_ID = 'com.gardenbrows.blog'
 PWA_APP_SHORT_NAME = 'Garden Brows'

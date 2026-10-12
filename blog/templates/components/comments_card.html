@@ -10,7 +10,7 @@
         {% comment %} {% if user.is_authenticated %} {% endcomment %}
             <div class="bg-brand-light/50 border border-brand-blush/20 rounded-2xl p-6 mb-10 shadow-sm">
                 <h4 class="text-sm font-bold text-brand-dark uppercase tracking-wider mb-4">Deixe seu comentário</h4>
-                <form method="post" class="flex flex-col gap-4">
+                <form method="post" id="comment-form" class="flex flex-col gap-4">
                     {% csrf_token %}
                     <div>
                         <input type="text" 
@@ -32,9 +32,9 @@
                         <p class="text-xs text-red-500 mt-1">{{ form.content.errors.0 }}</p>
                     {% endif %}
                     <div class="flex justify-end">
-                        <button type="submit" 
-                            class="bg-brand-terracotta text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm">
-                            Publicar comentário
+                        <button type="submit" id="submit-comment-btn" 
+                            class="bg-brand-terracotta text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm flex items-center justify-center gap-2">
+                            <span>Publicar comentário</span>
                         </button>
                     </div>
                 </form>
@@ -127,5 +127,25 @@
                     }
                 }
             }
+
+
+            document.getElementById('comment-form').addEventListener('submit', function(e) {
+                const btn = document.getElementById('submit-comment-btn');
+                
+                // Desativa o botão e altera o estilo visual para indicar processamento
+                btn.disabled = true;
+                btn.classList.add('opacity-70', 'cursor-not-allowed', 'hover:bg-brand-terracotta');
+                
+                // Insere o spinner ao lado do texto
+                btn.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Publicando...</span>
+                `;
+            });
+
+
         </script>
     </div>

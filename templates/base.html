@@ -20,7 +20,7 @@
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Beleza & Prática{% endblock %} | GardenBrows">
     <meta property="og:description" content="{% block og_description %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{{ request.build_absolute_uri }}{% static 'img/og-logo.png' %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-logo.png' %}{% endblock %}">
     <meta property="og:site_name" content="Beleza & Prática | GardenBrows">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
@@ -28,7 +28,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}{% block title_tw %}Beleza & Prática{% endblock title_tw %}{% endblock twitter_title %} | GardenBrows">
     <meta name="twitter:description" content="{% block twitter_description %}{% block meta_desc_tw %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock meta_desc_tw %}{% endblock twitter_description %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{% block og_img_tw %}{{ request.build_absolute_uri }}{% static 'img/og-logo.png' %}{% endblock og_img_tw %}{% endblock twitter_image %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% block og_img_tw %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-logo.png' %}{% endblock og_img_tw %}{% endblock twitter_image %}">
 
     <link href="{% static 'css/output.css' %}" rel="stylesheet" >
     <link rel="preconnect" href="https://fonts.googleapis.com">

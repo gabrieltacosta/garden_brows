@@ -93,10 +93,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.analytics',  # Adiciona o context processor para o Google Analytics
             ],
         },
     },
 ]
+
+GA_MEASUREMENT_ID = config("GA_MEASUREMENT_ID", default=None)
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

@@ -321,5 +321,7 @@ def material_page(request):
 def manually_clear_cache(request):
     cache.clear()
     messages.success(request, "Cache limpo com sucesso! Todas as páginas foram atualizadas.")
-    referer = request.META.get('HTTP_REFERER', 'admin:index')
-    return redirect(referer)
+    next_url = request.GET.get('next') or request.META.get('HTTP_REFERER')
+    if not next_url or '/admin/login/' in next_url:
+        next_url = '/'
+    return redirect(next_url)

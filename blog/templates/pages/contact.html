@@ -11,34 +11,27 @@
 
     {% if messages %}
         {% for message in messages %}
-            <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-2xl mb-8 text-sm text-center font-medium animate-pulse">
-                {{ message }}
-            </div>
+            {% if 'cache-admin' not in message.extra_tags %}
+                <div class="{% if 'error' in message.tags %}bg-red-50 border-red-200 text-red-800{% else %}bg-emerald-50 border-emerald-200 text-emerald-800{% endif %} border px-4 py-3 rounded-2xl mb-8 text-sm text-center font-medium animate-pulse">
+                    {{ message }}
+                </div>
+            {% endif %}
         {% endfor %}
     {% endif %}
 
     <form method="POST" class="bg-white p-8 rounded-3xl border border-brand-blush/20 shadow-sm space-y-6">
-        {% comment %} {% csrf_secret_token %} {% endcomment %}
         {% csrf_token %}
-        <div>
-            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Seu Nome</label>
-            <input type="text" name="name" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de nome">
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Seu E-mail</label>
-            <input type="email" name="email" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de email">
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Assunto</label>
-            <input type="text" name="subject" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition" aria-label="input de assunto">
-        </div>
-
-        <div>
-            <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">Mensagem</label>
-            <textarea name="message" rows="5" required class="w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition resize-none" aria-label="área de texto de mensagem"></textarea>
-        </div>
+        {% for field in form %}
+            <div>
+                <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
 
         <button type="submit" class="w-full bg-brand-terracotta text-white font-semibold py-3 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm">
             Enviar Mensagem

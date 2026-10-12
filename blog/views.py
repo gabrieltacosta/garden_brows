@@ -19,7 +19,7 @@ from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
 from django.urls import reverse
-from blog.forms import CommentForm
+from blog.forms import CommentForm, ContactForm
 
 from .models import Post, Category, Tag, Material, PostView
 from django.views.generic import DetailView
@@ -255,25 +255,31 @@ class TermsOfUseView(TemplateView):
 def contact_view(request):
 
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        subject = request.POST.get("subject")
-        message = request.POST.get("message")
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = request.POST.get("name")
+            email = request.POST.get("email")
+            subject = request.POST.get("subject")
+            message = request.POST.get("message")
 
-        # TODO: Aqui você pode usar o send_mail do Django para enviar um e-mail real para você.
-        # Por enquanto, vamos apenas simular o sucesso.
-        send_mail(
-            subject=f"Contato do Blog: {subject}",
-            message=f"Nome: {name}\nEmail: {email}\n\nMensagem:\n{message}",
-            from_email=None,
-            recipient_list=['carolina.moraes1991@gmail.com'],
-            fail_silently=False,
-        )
-        
-        messages.success(request, f"Obrigada, {name}! Sua mensagem foi enviada com sucesso. Responderemos em breve.")
-        return redirect("blog:contact")
+            try:    
 
-    return render(request, "pages/contact.html")
+                send_mail(
+                    subject=f"Contato do Blog: {subject}",
+                    message=f"Nome: {name}\nEmail: {email}\n\nMensagem:\n{message}",
+                    from_email=None,
+                    recipient_list=['gabriel.tuka@gmail.com'],
+                    fail_silently=False,
+                )
+                messages.success(request, f"Obrigada, {name}! Sua mensagem foi enviada com sucesso. Responderemos em breve.")
+            except Exception as e:
+                messages.error(request, f"Desculpe, {name}. Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.")
+            return redirect("blog:contact")
+
+    else:
+        form = ContactForm()
+
+    return render(request, "pages/contact.html", {"form": form})
 
 
 @cache_page(60 * 60 * 24)  # Cache de 24 horas
@@ -320,7 +326,11 @@ def material_page(request):
 @staff_member_required
 def manually_clear_cache(request):
     cache.clear()
-    messages.success(request, "Cache limpo com sucesso! Todas as páginas foram atualizadas.")
+    messages.success(
+        request,
+        "Cache limpo com sucesso! Todas as páginas foram atualizadas.",
+        extra_tags="cache-admin"
+    )
     next_url = request.GET.get('next') or request.META.get('HTTP_REFERER')
     if not next_url or '/admin/login/' in next_url:
         next_url = '/'

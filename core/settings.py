@@ -371,7 +371,6 @@ JAZZMIN_SETTINGS = {
     "login_logo": None,
     "usermenu_links": [
         {"name": "Home", "url": "blog:home", "new_window": False, "icon": "fas fa-home"},
-        
     ],
     "icons": {
         "auth": "fas fa-users-cog",

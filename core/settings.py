@@ -367,7 +367,7 @@ JAZZMIN_SETTINGS = {
     "site_title": "GardenBrows Blog Admin",
     "site_header": "GardenBrows Blog",
     "site_brand": "GardenBrows Blog",
-    "site_logo": "/img/logo-48x48.png",
+    "site_logo": "/img/logo-192x192.png",
     "login_logo": None,
     "usermenu_links": [
         {"name": "Home", "url": "blog:home", "new_window": False, "icon": "fas fa-home"},

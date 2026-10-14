@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'blog',
     'pwa',
+    'django_user_agents',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -190,12 +192,23 @@ CKEDITOR_5_CONFIGS = {
             "|",
             "bold",
             "italic",
+            "underline",
+            "strikethrough",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "todoList",
+            "|",
             "link",
             "imageUpload",
-            "|",
             "blockQuote",
             "insertTable",
             "mediaEmbed",
+            "|",
+            "fontColor",
+            "fontBackgroundColor",
+            "removeFormat",
+            "|",
             "undo",
             "redo",
         ],

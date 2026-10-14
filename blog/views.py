@@ -178,6 +178,10 @@ class PostDetailView(FormMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
+
+        if request.user_agent.is_bot:
+            return response
+
         # Captura o IP do visitante
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         ip = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')

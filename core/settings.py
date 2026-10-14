@@ -367,8 +367,12 @@ JAZZMIN_SETTINGS = {
     "site_title": "GardenBrows Blog Admin",
     "site_header": "GardenBrows Blog",
     "site_brand": "GardenBrows Blog",
-    "site_logo": "/img/logo-96x96.png",
+    "site_logo": "/img/logo-48x48.png",
     "login_logo": None,
+    "usermenu_links": [
+        {"name": "Home", "url": "blog:home", "new_window": False, "icon": "fas fa-home"},
+        
+    ],
     "icons": {
         "auth": "fas fa-users-cog",
         "blog.author": "fas fa-user",
@@ -383,5 +387,5 @@ JAZZMIN_SETTINGS = {
     "user_avatar": "avatar_url",  # Função para obter o avatar do usuário
     "custom_css": "css/custom_admin.css",
     "welcome_sign": "Bem-vindo(a) ao GardenBrows Blog",
-    "copyright": "GardenBrows Blog",
+    "copyright": "GardenBrows&reg; Blog",
 }

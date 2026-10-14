@@ -29,7 +29,7 @@ class Author(AbstractUser):
     def avatar_url(self):
         if self.image and hasattr(self.image, 'url'):
             return self.image.url
-        return 'Sem imagem'
+        return None
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name="Nome")

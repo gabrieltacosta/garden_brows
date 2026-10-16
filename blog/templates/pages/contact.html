@@ -33,6 +33,11 @@
             </div>
         {% endfor %}
 
+        <p class="text-xs text-brand-dark/60 mt-3">
+            Ao enviar esta mensagem, você concorda que usaremos seus dados apenas para responder à sua solicitação. 
+            Consulte nossa <a href={% url "blog:privacy" %} class="underline text-brand-terracotta font-semibold" target="_blank">Política de Privacidade</a>.
+        </p>
+
         <button type="submit" id="submit-btn" class="w-full bg-brand-terracotta text-white font-semibold py-3 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm flex items-center justify-center gap-2">
             <span>Enviar Mensagem</span>
         </button>

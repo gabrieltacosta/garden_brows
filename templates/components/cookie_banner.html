@@ -1,13 +1,13 @@
 <!-- components/cookie_banner.html -->
-<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t border-brand-blush/20 shadow-lg transform translate-y-full transition-transform duration-300 ease-out">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+<div id="cookie-banner" class="fixed inset-x-0 bottom-0 left-0 right-0 z-50 bg-white border-t border-brand-blush/20 shadow-lg transform translate-y-full transition-transform duration-300 ease-out">
+    <div class="container max-w-6xl mx-auto p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-sm text-brand-dark/80 text-center sm:text-left">
             <p>Usamos cookies e tecnologias semelhantes para analisar o tráfego e melhorar sua experiência. Você pode aceitar todos ou recusar.</p>
             <p class="mt-2">
                 Consulte nossa
-                <a href="/politica-de-privacidade/" class="underline hover:text-brand-terracotta">Política de Privacidade</a>
+                <a href={% url "blog:privacy" %} class="underline text-brand-terracotta font-semibold">Política de Privacidade</a>
                 e os
-                <a href="/termos-de-uso/" class="underline hover:text-brand-terracotta">Termos de Uso</a>.
+                <a href={% url "blog:terms" %} class="underline text-brand-terracotta font-semibold">Termos de Uso</a>.
             </p>
         </div>
         <div class="flex items-center gap-3 shrink-0">

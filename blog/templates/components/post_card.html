@@ -7,8 +7,26 @@
     <div class="p-5 grow flex flex-col justify-between">
         <div>
             <div class="flex items-center justify-between gap-2 mb-2">
-                <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.created_at|date:"d M, Y" }}</span>
-                <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.active_comments_count|default:"0" }} comentários</span>
+                <div>
+                    <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider">{{ post.created_at|date:"d M, Y" }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    {% if post.views %}
+                        <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider flex items-center gap-1">
+                            <svg class="w-4 h-4 text-brand-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            {{ post.views.count|default:"0" }}
+                        </span>
+                    {% endif %}
+                    <span class="text-xs font-bold text-brand-terracotta uppercase tracking-wider flex items-center gap-1">
+                        <svg class="w-4 h-4 text-brand-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h8m-8 4h5m-9 6 1.5-4.5A8 8 0 1 1 8 18.5L4 20z" />
+                        </svg>
+                        {{ post.active_comments_count|default:"0" }}
+                    </span>
+                </div>
             </div>
             <h3 class="font-display text-lg font-bold text-brand-dark mt-1 mb-2 hover:text-brand-terracotta transition">
                 <a href="{% url 'blog:detail' post.slug %}" aria-label="Ler mais sobre {{ post.title }}">{{ post.title }}</a>

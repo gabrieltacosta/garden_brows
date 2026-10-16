@@ -29,7 +29,6 @@
     <meta name="twitter:title" content="{% block twitter_title %}{% block title_tw %}Beleza & Prática{% endblock title_tw %}{% endblock twitter_title %} | GardenBrows">
     <meta name="twitter:description" content="{% block twitter_description %}{% block meta_desc_tw %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock meta_desc_tw %}{% endblock twitter_description %}">
     <meta name="twitter:image" content="{% block twitter_image %}{% block og_img_tw %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-logo.png' %}{% endblock og_img_tw %}{% endblock twitter_image %}">
-
     <link href="{% static 'css/output.css' %}" rel="stylesheet" >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +38,8 @@
     <meta name="theme-color" content="#D38B8B">
     <!-- Manifesto PWA -->
     {% progressive_web_app_meta %}
+    <!-- Bloco para Schema.org / JSON-LD dinâmico -->
+    {% block json_ld %}{% endblock %}
 </head>
 <body class="bg-brand-light text-brand-dark flex flex-col min-h-screen font-sans antialiased">
 

@@ -18,7 +18,7 @@
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}Beleza & Prática{% endblock %} | GardenBrows">
+    <meta property="og:title" content="{% block og_title %}Beleza & Prática | GardenBrows{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Experiências reais de quem viveu a rotina da beleza e decidiu compartilhar tudo o que aprendeu na prática.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/og-logo.png' %}{% endblock %}">
     <meta property="og:site_name" content="Beleza & Prática | GardenBrows">
@@ -39,7 +39,34 @@
     <!-- Manifesto PWA -->
     {% progressive_web_app_meta %}
     <!-- Bloco para Schema.org / JSON-LD dinâmico -->
-    {% block json_ld %}{% endblock %}
+    {% block json_ld %}
+        <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "GardenBrows",
+            "url": "{{ request.scheme }}://{{ request.get_host }}",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "{{ request.scheme }}://{{ request.get_host }}/posts/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+            }
+        </script>
+        <script type="application/ld+json">
+                {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "GardenBrows",
+                "url": "{{ request.scheme }}://{{ request.get_host }}",
+                "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/logo-512x512.png' %}",
+                "sameAs": [
+                    "https://www.instagram.com/acarolgarden",
+                    "https://www.tiktok.com/@acarolgarden"
+                ]
+                }
+        </script>
+    {% endblock %}
 </head>
 <body class="bg-brand-light text-brand-dark flex flex-col min-h-screen font-sans antialiased">
 

@@ -1,0 +1,68 @@
+<!-- components/cookie_banner.html -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t border-brand-blush/20 shadow-lg transform translate-y-full transition-transform duration-300 ease-out">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-brand-dark/80 text-center sm:text-left">
+            <p>Usamos cookies e tecnologias semelhantes para analisar o tráfego e melhorar sua experiência. Você pode aceitar todos ou recusar.</p>
+            <p class="mt-2">
+                Consulte nossa
+                <a href="/politica-de-privacidade/" class="underline hover:text-brand-terracotta">Política de Privacidade</a>
+                e os
+                <a href="/termos-de-uso/" class="underline hover:text-brand-terracotta">Termos de Uso</a>.
+            </p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+            <button id="cookie-reject" class="px-4 py-2 text-xs font-bold text-brand-dark uppercase tracking-wider bg-gray-100 hover:bg-gray-200 rounded-xl transition cursor-pointer">
+                Recusar
+            </button>
+            <button id="cookie-accept" class="px-4 py-2 text-xs font-bold text-white uppercase tracking-wider bg-brand-terracotta hover:bg-brand-dark rounded-xl transition cursor-pointer">
+                Aceitar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const banner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('cookie-accept');
+        const rejectBtn = document.getElementById('cookie-reject');
+        const consent = localStorage.getItem('cookie_consent');
+
+        if (!consent) {
+            setTimeout(() => {
+                banner.classList.remove('translate-y-full');
+            }, 300);
+        } else {
+            banner.style.display = 'none';
+        }
+
+        acceptBtn.addEventListener('click', function() {
+            localStorage.setItem('cookie_consent', 'accepted');
+            banner.classList.add('translate-y-full');
+            setTimeout(() => banner.remove(), 300);
+            
+            // Tenta chamar a função global. Se por acaso falhar, cria o GA direto aqui!
+            if (typeof window.initGoogleAnalytics === 'function') {
+                window.initGoogleAnalytics();
+            } else if (window.GA_MEASUREMENT_ID) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_MEASUREMENT_ID}`;
+                document.head.appendChild(script);
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', window.GA_MEASUREMENT_ID);
+                console.log("Google Analytics carregado pelo fallback do banner!");
+            }
+        });
+
+        rejectBtn.addEventListener('click', function() {
+            localStorage.setItem('cookie_consent', 'rejected');
+            banner.classList.add('translate-y-full');
+            setTimeout(() => banner.remove(), 300);
+        });
+    });
+</script>

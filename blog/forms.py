@@ -1,7 +1,10 @@
 from django import forms
 from .models import Comment
+from turnstile.fields import TurnstileField
 
 class CommentForm(forms.ModelForm):
+    turnstile = TurnstileField()
+
     class Meta:
         model = Comment
         fields = ['name','content']
@@ -9,6 +12,11 @@ class CommentForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'Escreva seu nome'}),
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Escreva seu comentário...'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('remote_ip', None)
+        super().__init__(*args, **kwargs)
+
 
 
 class ContactForm(forms.Form):
@@ -29,3 +37,4 @@ class ContactForm(forms.Form):
         'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition resize-y',
         'aria-label': 'Input de Mensagem',
         'placeholder': 'Escreva sua mensagem...'}))
+    turnstile = TurnstileField()

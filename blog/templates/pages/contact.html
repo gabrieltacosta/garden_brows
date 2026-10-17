@@ -21,22 +21,29 @@
 
     <form method="POST" id="contact-form" class="bg-white p-8 rounded-3xl border border-brand-blush/20 shadow-sm space-y-6">
         {% csrf_token %}
+        <div style="display:none;" aria-hidden="true">
+            <input type="text" name="website_honeypot" tabindex="-1" autocomplete="off">
+        </div>
         {% for field in form %}
-            <div>
-                <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
-                    {{ field.label }}
-                </label>
-                {{ field }}
-                {% if field.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
-                {% endif %}
-            </div>
+            {% if field.name != 'turnstile' %}
+                <div>
+                    <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endfor %}
-
         <p class="text-xs text-brand-dark/60 mt-3">
             Ao enviar esta mensagem, você concorda que usaremos seus dados apenas para responder à sua solicitação. 
             Consulte nossa <a href={% url "blog:privacy" %} class="underline text-brand-terracotta font-semibold" target="_blank">Política de Privacidade</a>.
         </p>
+        <div class="my-4">
+            {{ form.turnstile }}
+        </div>
 
         <button type="submit" id="submit-btn" class="w-full bg-brand-terracotta text-white font-semibold py-3 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm flex items-center justify-center gap-2">
             <span>Enviar Mensagem</span>

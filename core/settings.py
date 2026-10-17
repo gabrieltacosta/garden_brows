@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'blog',
     'pwa',
     'django_user_agents',
+    'turnstile',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,12 @@ TEMPLATES = [
 ]
 
 GA_MEASUREMENT_ID = config("GA_MEASUREMENT_ID", default=None)
+
+
+# Configurações do Cloudflare Turnstile
+TURNSTILE_SITEKEY = config("CLOUDFLARE_TURNSTILE_SITEKEY", default="")
+TURNSTILE_SECRET = config("CLOUDFLARE_TURNSTILE_SECRET_KEY", default="")
+
 
 WSGI_APPLICATION = 'core.wsgi.application'
 

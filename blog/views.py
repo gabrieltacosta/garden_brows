@@ -108,7 +108,7 @@ def ckeditor5_custom_upload(request):
             
     return JsonResponse({'error': {'message': 'Método não permitido ou arquivo não enviado.'}}, status=400)
 
-@cache_page(60 * 60)  # Cache de 1 hora
+#@cache_page(60 * 60)  # Cache de 1 hora
 def home(request):
     posts_published = list(Post.objects.filter(status='published').order_by('-created_at'))
     featured_post = posts_published[0] if posts_published else None
@@ -159,12 +159,19 @@ class PostDetailView(FormMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        form = self.get_form()
+
+        if request.POST.get("website_honeypot"):
+            messages.success(request, "Agradecemos sua contribuição. Ele será exibido assim que for aprovado por um moderador.")
+            return redirect('blog:detail', slug=self.object.slug)
+
+        remote_ip = request.META.get("REMOTE_ADDR")
+
+        form = self.get_form_class()(request.POST, remote_ip=remote_ip)
 
         if form.is_valid():
             return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        
+        return self.form_invalid(form)
 
     def form_valid(self, form):
         comment = form.save(commit=False)
@@ -174,6 +181,10 @@ class PostDetailView(FormMixin, DetailView):
         messages.success(self.request, "Agradecemos sua contribuição. Ele será exibido assim que for aprovado por um moderador.")
 
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Por favor, confirme que você não é um robô para enviar o comentário.")
+        return super().form_invalid(form)
 
 
     def get(self, request, *args, **kwargs):
@@ -211,10 +222,18 @@ class PostDetailView(FormMixin, DetailView):
         return response
 
 
-@cache_page(60 * 60)  # Cache de 1 hora
+
 def post_archive(request):
+    query = request.GET.get('q', '').strip()
     # Pega todos os posts publicados
     posts_list = Post.objects.filter(status='published').order_by('-created_at')
+
+    if query:
+        posts_list = posts_list.filter(
+            models.Q(title__icontains=query) | 
+            models.Q(description__icontains=query) |
+            models.Q(content__icontains=query)
+        ).distinct()
     
     # Define o limite de 9 posts por página
     paginator = Paginator(posts_list, 9)
@@ -243,7 +262,8 @@ def post_archive(request):
     page_obj = paginator.get_page(page_number)
     return render(request, "archive.html", {
         'page_obj': page_obj,
-        'has_next': page_obj.has_next()
+        'has_next': page_obj.has_next(),
+        'search_query': query,
     })
 
 
@@ -258,7 +278,12 @@ class TermsOfUseView(TemplateView):
 def contact_view(request):
 
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        if request.POST.get("website_honeypot"):
+            messages.success(request, "Sua mensagem foi enviada com sucesso.")
+            return redirect("blog:contact")
+        
+        remote_ip = request.META.get("REMOTE_ADDR")
+        form = ContactForm(request.POST, remote_ip=remote_ip)
         if form.is_valid():
             name = request.POST.get("name")
             email = request.POST.get("email")
@@ -278,7 +303,8 @@ def contact_view(request):
             except Exception as e:
                 messages.error(request, f"Desculpe, {name}. Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.")
             return redirect("blog:contact")
-
+        else:
+            messages.error(request, "Por favor, confirme que você não é um robô.")
     else:
         form = ContactForm()
 

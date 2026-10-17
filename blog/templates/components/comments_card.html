@@ -12,6 +12,9 @@
                 <h4 class="text-sm font-bold text-brand-dark uppercase tracking-wider mb-4">Deixe seu comentário</h4>
                 <form method="post" id="comment-form" class="flex flex-col gap-4">
                     {% csrf_token %}
+                    <div style="display:none;" aria-hidden="true">
+                        <input type="text" name="website_honeypot" tabindex="-1" autocomplete="off">
+                    </div>
                     <div>
                         <input type="text" 
                             name="name" 
@@ -31,6 +34,12 @@
                     {% if form.content.errors %}
                         <p class="text-xs text-red-500 mt-1">{{ form.content.errors.0 }}</p>
                     {% endif %}
+                    <div class="my-2">
+                        {{ form.turnstile }}
+                        {% if form.turnstile.errors %}
+                            <p class="text-xs text-red-500 mt-1">{{ form.turnstile.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                     <div class="flex justify-end">
                         <button type="submit" id="submit-comment-btn" 
                             class="bg-brand-terracotta text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm flex items-center justify-center gap-2">

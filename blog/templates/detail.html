@@ -51,16 +51,23 @@
 {% if messages %}
     <div id="comment-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-xl border border-brand-blush/30 max-w-md w-full p-6 text-center transform scale-100 transition-transform duration-300">
-            <!-- Ícone de Sucesso -->
-            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 mb-4">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-            </div>
-
-            <h3 class="text-lg font-bold text-brand-dark mb-2">Comentário Recebido!</h3>
-
             {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <!-- Ícone de Alerta para erro no Turnstile/Campos -->
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 text-amber-600 mb-4">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-dark mb-2">Atenção</h3>
+                {% else %}
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 mb-4">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-brand-dark mb-2">Comentário Recebido!</h3>
+                {% endif %}
                 <p class="text-sm text-brand-dark/70 mb-6 leading-relaxed">
                     {{ message }}
                 </p>

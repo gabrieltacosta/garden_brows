@@ -5,10 +5,21 @@
 {% block content %}
 <div class="container max-w-6xl mx-auto px-4 py-12">
     
-    <header class="text-center mb-12">
-        <h1 class="font-display text-2xl md:text-4xl font-bold text-brand-dark mb-4">Universo GardenBrows</h1>
-        <p class="text-brand-dark/70 max-w-xl mx-auto">Explore todas as nossas dicas, inspirações, tendências e conversas sobre o nosso mundo.</p>
-    </header>
+    {% if search_query %}
+        <div class="mb-10 text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-brand-dark mb-2">
+                Resultados para: "<span class="text-brand-terracotta">{{ search_query }}</span>"
+            </h1>
+            <a href="{% url 'blog:archive' %}" class="text-xs text-brand-dark/60 underline hover:text-brand-terracotta transition">
+                Limpar busca e ver todos os posts
+            </a>
+        </div>
+    {% else %}
+        <header class="text-center mb-12">
+            <h1 class="font-display text-2xl md:text-4xl font-bold text-brand-dark mb-4">Universo GardenBrows</h1>
+            <p class="text-brand-dark/70 max-w-xl mx-auto">Explore todas as nossas dicas, inspirações, tendências e conversas sobre o nosso mundo.</p>
+        </header>
+    {% endif %}
 
     <div id="posts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
         {% if page_obj %}
@@ -45,8 +56,16 @@
             // 1. Ativa o spinner visualmente e trava o botão contra cliques duplos
             loadMoreBtn.disabled = true;
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('q') || '';
+
+            let fetchUrl = `?page=${nextPage}`;
+            if (searchQuery) {
+                fetchUrl += `&q=${encodeURIComponent(searchQuery)}`;
+            }
+
             // 2. Faz a busca no Django passando o número da próxima página
-            fetch(`?page=${nextPage}`, {
+            fetch(fetchUrl, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }

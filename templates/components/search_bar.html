@@ -1,0 +1,14 @@
+<!-- components/search_bar.html -->
+<form action="{% url 'blog:archive' %}" method="get" class="flex items-center">
+    <div class="relative flex w-full md:max-w-16 items-center bg-brand-light/50 text-sm text-brand-dark px-4 py-2 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition gap-2">
+        <!-- Ícone centralizado verticalmente com flex -->
+        <span class="absolute left-3 flex items-center justify-center pointer-events-none text-brand-dark/40">
+            <i class="fa-solid fa-magnifying-glass text-xs"></i>
+        </span>
+        <input type="text" 
+               name="q" 
+               value="{{ request.GET.q|default:'' }}"
+               placeholder="Buscar artigos..." 
+               class="focus:outline-none">
+    </div>
+</form>

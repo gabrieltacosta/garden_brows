@@ -17,8 +17,9 @@
             <a href="{% url 'blog:archive' %}" class="block py-2 md:py-0 whitespace-nowrap {% if request.resolver_match.url_name == 'archive' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Todos os Posts</a>
             <a href="{% url 'blog:material_view' %}" class="block py-2 md:py-0 {% if request.resolver_match.url_name == 'material_view' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Materiais</a>
             <a href="{% url 'blog:contact' %}" class="block py-2 md:py-0 {% if request.resolver_match.url_name == 'contact' %}text-brand-terracotta font-bold{% endif %} hover:text-brand-terracotta transition">Contato</a>
-            
-            {% include "components/search_bar.html" %}
+            <div class="w-full md:w-52 lg:w-60 pt-2 md:pt-0" >
+                {% include "components/search_bar.html" %}
+            </div>
         </div>
     </div>
 </nav>

@@ -1,6 +1,5 @@
-<!-- components/search_bar.html -->
-<form action="{% url 'blog:archive' %}" method="get" class="flex items-center">
-    <div class="relative flex w-full md:max-w-16 items-center bg-brand-light/50 text-sm text-brand-dark px-4 py-2 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition gap-2">
+<form action="{% url 'blog:archive' %}" method="get" class="relative flex items-center w-full">
+    <div class="relative w-full flex items-center">
         <!-- Ícone centralizado verticalmente com flex -->
         <span class="absolute left-3 flex items-center justify-center pointer-events-none text-brand-dark/40">
             <i class="fa-solid fa-magnifying-glass text-xs"></i>
@@ -9,6 +8,6 @@
                name="q" 
                value="{{ request.GET.q|default:'' }}"
                placeholder="Buscar artigos..." 
-               class="focus:outline-none">
+               class="w-full pl-9 pr-4 py-2 text-xs md:text-sm bg-brand-light/60 border border-brand-blush/30 rounded-full focus:outline-none focus:border-brand-terracotta focus:bg-white transition text-brand-dark placeholder:text-brand-dark/40 shadow-xs">
     </div>
 </form>

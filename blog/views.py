@@ -4,6 +4,7 @@ from django.views.generic.edit import FormMixin
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth import login
 import os
 from io import BytesIO
 from urllib.parse import urlparse
@@ -19,7 +20,7 @@ from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
 from django.urls import reverse
-from blog.forms import CommentForm, ContactForm
+from blog.forms import CommentForm, ContactForm, CustomAdminForm
 from django.conf import settings
 from .models import Post, Category, Tag, Material, PostView
 from django.views.generic import DetailView
@@ -31,6 +32,37 @@ from django.db import models
 def healthcheck(request):
     return HttpResponse("OK", status=200)
 
+def custom_admin_login_view(request):
+    # Se o usuário já estiver logado, redireciona para o admin
+    if request.user.is_authenticated:
+        return redirect('/admin/')
+
+    if request.method == 'POST':
+        # 1. Validação do Honeypot (Bloqueio de bots)
+        if request.POST.get("website_honeypot"):
+            messages.error(request, "Acesso bloqueado por segurança.")
+            return redirect(request.path)
+
+        # 2. Instancia o formulário passando o request e os dados POST
+        form = CustomAdminForm(request, data=request.POST)
+
+        if form.is_valid():
+            # Realiza o login do usuário autenticado
+            user = form.get_user()
+            login(request, user)
+            
+            # Redireciona para a página 'next' ou para o painel admin padrão
+            next_url = request.GET.get('next') or request.POST.get('next') or '/admin/'
+            return redirect(next_url)
+    else:
+        form = CustomAdminForm(request)
+
+    context = {
+        'form': form,
+        'title': 'Entrar - GardenBrows Admin',
+        'next': request.GET.get('next') or request.POST.get('next', '')
+    }
+    return render(request, 'admin/login.html', context)
 
 @csrf_exempt
 def ckeditor5_custom_upload(request):

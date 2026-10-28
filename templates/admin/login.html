@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Login Administrativo{% endblock %}
+
+{% block content %}
+
+
+<div class="max-w-2xl mx-auto px-4 py-16">
+    <header class="text-center mb-12">
+        <h1 class="font-display text-2xl lg:text-4xl font-bold text-brand-dark mb-4">Área Administrativa</h1>
+    </header>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{% if 'error' in message.tags or message.level_tag == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-emerald-50 border-emerald-200 text-emerald-800{% endif %} border px-4 py-3 rounded-2xl mb-8 text-sm text-center font-medium">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" id="login-form" class="bg-white p-8 rounded-3xl border border-brand-blush/20 shadow-sm space-y-6">
+        {% csrf_token %}
+        <div style="display:none;" aria-hidden="true">
+            <input type="text" name="website_honeypot" tabindex="-1" autocomplete="off">
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-2xl text-sm text-center font-medium">
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            {% if field.name != 'turnstile' %}
+                <div>
+                    <label class="block text-xs font-bold text-brand-dark uppercase tracking-wider mb-2">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Campo oculto para redirecionamento após o login -->
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="my-4">
+            {{ form.turnstile }}
+            {% if form.turnstile.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.turnstile.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" id="submit-btn" class="w-full bg-brand-terracotta text-white font-semibold py-3 rounded-xl hover:bg-brand-dark transition cursor-pointer shadow-sm flex items-center justify-center gap-2">
+            <span>Entrar no Painel</span>
+        </button>
+    </form>
+
+</div>
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        const btn = document.getElementById('submit-btn');
+        
+        // Desativa o botão e muda o visual para indicar carregamento
+        btn.disabled = true;
+        btn.classList.add('opacity-70', 'cursor-not-allowed', 'hover:bg-brand-terracotta');
+        btn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Entrando...</span>
+        `;
+    });
+</script>
+{% endblock %}

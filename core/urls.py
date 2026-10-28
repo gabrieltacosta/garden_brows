@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemaps import PostSitemap, StaticSitemap, CategorySitemap,TagSitemap
 from django.views.generic.base import TemplateView
-from blog.views import ckeditor5_custom_upload
+from blog.views import ckeditor5_custom_upload, custom_admin_login_view
 
 
 
@@ -16,7 +16,8 @@ sitemaps = {
     "tags": TagSitemap
 }
 
-urlpatterns = [    
+urlpatterns = [
+    path('admin/login/', custom_admin_login_view, name='admin_login'),
     path('admin/', admin.site.urls),
     path('ckeditor5/image_upload/', ckeditor5_custom_upload, name='ckeditor5_image_upload'),
     path('ckeditor5/', include('django_ckeditor_5.urls')),

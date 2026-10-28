@@ -121,6 +121,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 AUTH_USER_MODEL = "blog.Author"
 
+LOGIN_REDIRECT_URL = '/admin/'
+LOGOUT_REDIRECT_URL = '/admin/login/'
+
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases

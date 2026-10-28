@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Comment
 from turnstile.fields import TurnstileField
 
@@ -20,21 +21,70 @@ class CommentForm(forms.ModelForm):
 
 
 class ContactForm(forms.Form):
-    name = forms.CharField(label='Seu Nome', max_length=100, required=True, widget=forms.TextInput(attrs={
+    name = forms.CharField(
+        label='Seu Nome', 
+        max_length=100, 
+        required=True, 
+        widget=forms.TextInput(attrs={
         'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition',
         'aria-label': 'Input de Nome',
-        'placeholder': 'Escreva seu nome'}))
-    email = forms.EmailField(label='Seu E-mail', required=True, widget=forms.EmailInput(attrs={
+        'placeholder': 'Escreva seu nome'}
+        )
+    )
+
+    email = forms.EmailField(
+        label='Seu E-mail', 
+        required=True, 
+        widget=forms.EmailInput(attrs={
         'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition',
         'aria-label': 'Input de Email',
-        'placeholder': 'Escreva seu email'}))
-    subject = forms.CharField(label='Assunto', max_length=200, required=True, widget=forms.TextInput(attrs={
+        'placeholder': 'Escreva seu email'}
+        )
+    )
+
+    subject = forms.CharField(
+        label='Assunto', 
+        max_length=200, 
+        required=True, 
+        widget=forms.TextInput(attrs={
         'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition',
         'aria-label': 'Input de Assunto',
-        'placeholder': 'Escreva o assunto'}))
-    message = forms.CharField(label='Sua Mensagem', required=True, widget=forms.Textarea(attrs={
+        'placeholder': 'Escreva o assunto'}
+        )
+    )
+    
+    message = forms.CharField(
+        label='Sua Mensagem', required=True, widget=forms.Textarea(attrs={
         'rows': 5,
         'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition resize-y',
         'aria-label': 'Input de Mensagem',
-        'placeholder': 'Escreva sua mensagem...'}))
+        'placeholder': 'Escreva sua mensagem...'
+        })
+    )
+
+    turnstile = TurnstileField()
+
+
+
+class CustomAdminForm(AuthenticationForm):
+    username = forms.CharField(
+        label='Usuário', 
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition',
+            'aria-label': 'Input de username',
+            'placeholder': 'Seu nome de usuário',
+        })
+    )
+    password = forms.CharField(
+        label='Senha', 
+        required=True, 
+        min_length=8,
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full bg-brand-light/50 text-sm text-brand-dark px-4 py-3 rounded-xl border border-brand-blush/40 focus:outline-none focus:border-brand-terracotta transition',
+            'aria-label': 'Input de password',
+            'placeholder': '********',
+        })
+    )
+
     turnstile = TurnstileField()
